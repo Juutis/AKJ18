@@ -97,6 +97,12 @@ public class PlayerMovement : MonoBehaviour
         pos.x += Mathf.Clamp(horizontalSpeed, -maxRunSpeed, maxRunSpeed);
         transform.position = pos;
         verticalSpeed -= acceleration / 2.0f;
+        if ((transform.position.y + size) < -Camera.main.orthographicSize)
+        {
+            Vector2 loopPos = transform.position;
+            loopPos.y = Camera.main.orthographicSize + size;
+            transform.position = loopPos;
+        }
     }
 
     private void SetPlayerDirection(int direction)
@@ -161,7 +167,7 @@ public class PlayerMovement : MonoBehaviour
             if (!isOnGround)
             {
                 Vector3 pos = transform.position;
-                pos.y = ray.collider.bounds.max.y + size * 0.5f;
+                pos.y = ray.point.y + size * 0.5f;
                 transform.position = pos;
             }
             Debug.Log("We are on ground.");
