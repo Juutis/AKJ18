@@ -6,9 +6,9 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     private int dir = 0;
+    private int damage = 1;
     private float currentSpeed = 0f;
     private float projectileSpeed = 10f;
-    private float size = 0.75f;
     private float lifeTime = 2f;
     private float startLifetime = 0f;
 
@@ -19,9 +19,6 @@ public class Projectile : MonoBehaviour
 
     void Update()
     {
-        // Vector3 pos = transform.position;
-        // pos.x += currentSpeed * Time.deltaTime;
-        // transform.position = pos;
         collidingEntity.SetHorizontalInput(currentSpeed * dir);
 
         if (Time.time - startLifetime > lifeTime)
@@ -52,6 +49,7 @@ public class Projectile : MonoBehaviour
         dir = direction;
         collidingEntity.SetGravity(false);
         collidingEntity.SetWallCallback(HitWall);
+        collidingEntity.SetFloorCallback(HitFloor);
         collidingEntity.Reset();
         collidingEntity.SetCheckFloor(false);
     }
@@ -60,5 +58,10 @@ public class Projectile : MonoBehaviour
     {
         collidingEntity.SetGravity(true);
         collidingEntity.SetCheckFloor(true);
+    }
+
+    public void HitFloor()
+    {
+        damage = 0;
     }
 }
