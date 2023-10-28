@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        //Application.targetFrameRate = 5;
     }
 
     private bool gravity = true;
@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     private float horizontalSpeed = 0f;
     private float verticalSpeed = 0f;
     private float gravityStrength = 50f;
-    private float maxFallSpeed = 10f;
+    private float maxFallSpeed = 15f;
 
     private float minHorizontalInput = 0.0001f;
     private float minVerticalInput = 0.0001f;
@@ -46,8 +46,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private LayerMask wallLayer;
 
-    private float floorRayDistance = 0.6f;
-    private float wallRayDistance = 0.6f;
+    private float horizontalMovementPerFrame = 0f;
+
+    private float fallSpeed = 0f;
+
+    private float horizontalInput = 0f;
 
     private float size = 1f;
 
@@ -66,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
             verticalSpeed = jumpSpeed;
         }
 
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        horizontalInput = Input.GetAxisRaw("Horizontal");
         if (horizontalInput > minHorizontalInput)
         {
             horizontalSpeed = runSpeed * Time.deltaTime;
@@ -93,8 +96,10 @@ public class PlayerMovement : MonoBehaviour
         }
         Vector3 pos = transform.position;
         float vertSpeed = isOnGround ? Mathf.Clamp(verticalSpeed, 0, verticalSpeed) : verticalSpeed;
-        pos.y += Mathf.Clamp(vertSpeed, -maxFallSpeed, jumpSpeed) * Time.deltaTime;
-        pos.x += Mathf.Clamp(horizontalSpeed, -maxRunSpeed, maxRunSpeed);
+        fallSpeed = Mathf.Clamp(vertSpeed, -maxFallSpeed, jumpSpeed);
+        horizontalMovementPerFrame = Mathf.Clamp(horizontalSpeed, -maxRunSpeed, maxRunSpeed);
+        pos.y += fallSpeed * Time.deltaTime;
+        pos.x += horizontalMovementPerFrame;
         transform.position = pos;
         verticalSpeed -= acceleration / 2.0f;
         if ((transform.position.y + size) < -Camera.main.orthographicSize)
@@ -123,22 +128,39 @@ public class PlayerMovement : MonoBehaviour
 
     private bool RayCastToWall(Vector3 raycastOrigin)
     {
-        RaycastHit2D ray = Physics2D.Raycast(raycastOrigin, horizontalDirection * Vector2.right, wallRayDistance, wallLayer);
-        Debug.DrawRay(raycastOrigin, horizontalDirection * Vector2.right, Color.blue);
+        float rayDistance = Mathf.Abs(horizontalMovementPerFrame) + size;
+        RaycastHit2D ray = Physics2D.Raycast(raycastOrigin, horizontalDirection * Vector2.right, rayDistance, wallLayer);
+        Debug.DrawLine(raycastOrigin, new Vector3(raycastOrigin.x + rayDistance * horizontalDirection, raycastOrigin.y, raycastOrigin.z), Color.blue);
         if (ray.collider != null)
         {
-            if (!isTouchingWall)
+            if (Mathf.Abs(horizontalInput) > minHorizontalInput)
             {
-                //Vector3 pos = transform.position;
-                //pos.y = ray.point.x + size * 0.5f;
-                //transform.position = pos;
+                int direction = ray.point.x > transform.position.x ? 1 : -1;
+                if (horizontalDirection == direction)
+                {
+                    Vector3 pos = transform.position;
+
+                    float targetX = ray.point.x + (0.5f * -horizontalDirection);
+
+                    float maxMove;
+                    if (horizontalDirection == 1)
+                    {
+                        maxMove = targetX - pos.x;
+                    }
+                    else
+                    {
+                        maxMove = pos.x - targetX;
+                    }
+
+                    pos.x += Mathf.Clamp(Mathf.Abs(runSpeed * Time.deltaTime), 0, maxMove) * horizontalDirection;
+                    transform.position = pos;
+                }
             }
-            Debug.Log("We are hitting wall.");
+
             return true;
         }
         else
         {
-            Debug.Log("We are NOT hitting wall");
             return false;
         }
     }
@@ -160,8 +182,9 @@ public class PlayerMovement : MonoBehaviour
 
     private bool RaycastToGround(Vector3 raycastOrigin)
     {
-        RaycastHit2D ray = Physics2D.Raycast(raycastOrigin, Vector2.down, floorRayDistance, floorLayer);
-        Debug.DrawRay(raycastOrigin, Vector2.down, Color.red);
+        float rayDistance = Time.deltaTime * Mathf.Abs(fallSpeed * 2) + size;
+        RaycastHit2D ray = Physics2D.Raycast(raycastOrigin, Vector2.down, rayDistance, floorLayer);
+        Debug.DrawLine(raycastOrigin, new Vector3(raycastOrigin.x, raycastOrigin.y - rayDistance, raycastOrigin.z), Color.red);
         if (ray.collider != null)
         {
             if (!isOnGround)
