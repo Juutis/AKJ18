@@ -143,7 +143,9 @@ public class GameManager : MonoBehaviour
             scoreMultiplier += 1;
         }
 
-        currentScore += itemScore * scoreMultiplier;
+        int scoreGained = itemScore * scoreMultiplier;
+        UIScore.main.AddScore(scoreGained);
+        currentScore += scoreGained;
         Debug.Log($"Score: {currentScore}");
     }
 
