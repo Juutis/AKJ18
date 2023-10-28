@@ -218,8 +218,8 @@ public class CollidingEntity : MonoBehaviour
             return;
         }
 
-        Vector3 leftRaycastOrigin = floorRaycastPosition.position - new Vector3(size * 0.5f, 0f);
-        Vector3 rightRaycastOrigin = floorRaycastPosition.position + new Vector3(size * 0.5f, 0f);
+        Vector3 leftRaycastOrigin = floorRaycastPosition.position - new Vector3(size * 0.47f, 0f);
+        Vector3 rightRaycastOrigin = floorRaycastPosition.position + new Vector3(size * 0.47f, 0f);
 
         isOnGround = RaycastToGround(leftRaycastOrigin) || RaycastToGround(rightRaycastOrigin);
 
