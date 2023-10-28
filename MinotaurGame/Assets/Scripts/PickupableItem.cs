@@ -7,6 +7,9 @@ public class PickupableItem : MonoBehaviour
 
     public Item Item { get { return item; } }
 
+    [SerializeField]
+    private CircleCollider2D circleCollider2D;
+
     public void Kill()
     {
         Destroy(gameObject);

@@ -49,6 +49,7 @@ MonoBehaviour:
   item:
     Name: Axe
     itemType: 0
+  circleCollider2D: {fileID: 738196438107809445}
 --- !u!212 &4123044762188353061
 SpriteRenderer:
   m_ObjectHideFlags: 0

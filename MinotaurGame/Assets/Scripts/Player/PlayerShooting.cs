@@ -10,7 +10,7 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField]
     private CollidingEntity collidingEntity;
 
-    private int numOfProjectiles = 2;
+    private int numOfProjectiles = 20;
     private List<Projectile> projectiles = new List<Projectile>();
 
     // Start is called before the first frame update
@@ -22,8 +22,13 @@ public class PlayerShooting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.X) || Input.GetButtonDown("Fire1"))
         {
+            if (!GameManager.main.SpendProjectile())
+            {
+                return;
+            }
             if (projectiles.Count < numOfProjectiles)
             {
                 GameObject projectileInstance = Instantiate(projectilePrefab);

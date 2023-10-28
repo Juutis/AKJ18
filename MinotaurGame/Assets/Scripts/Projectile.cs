@@ -9,7 +9,7 @@ public class Projectile : MonoBehaviour
     private int damage = 1;
     private float currentSpeed = 0f;
     private float projectileSpeed = 10f;
-    private float lifeTime = 2f;
+
     private float startLifetime = 0f;
 
     private float radius = 0.75f;
@@ -22,14 +22,15 @@ public class Projectile : MonoBehaviour
 
     public bool IsActive { get; private set; }
 
+    [SerializeField]
+    private PickupableItem pickupItemPrefab;
+
+    private bool floorHasBeenHit = false;
+
+
     void Update()
     {
         collidingEntity.SetHorizontalInput(currentSpeed * dir);
-
-        if (Time.time - startLifetime > lifeTime)
-        {
-            Deactivate();
-        }
 
         if (damage > 0)
         {
@@ -37,7 +38,7 @@ public class Projectile : MonoBehaviour
             if (hit.collider != null)
             {
                 Damageable damageableEntity = hit.collider.GetComponent<Damageable>();
-                
+
                 Debug.Log($"Killed {damageableEntity.name}!");
                 damageableEntity.Kill();
             }
@@ -81,5 +82,8 @@ public class Projectile : MonoBehaviour
     public void HitFloor()
     {
         damage = 0;
+
+        PickupableItem pickupItem = Instantiate(pickupItemPrefab, transform.position, Quaternion.identity);
+        Deactivate();
     }
 }
