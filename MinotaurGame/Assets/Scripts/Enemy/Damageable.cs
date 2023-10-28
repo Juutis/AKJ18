@@ -5,6 +5,8 @@ using UnityEngine;
 public class Damageable : MonoBehaviour
 {
     private int HP;
+    [SerializeField]
+    private ParticleSystem dieEffect;
 
     // Start is called before the first frame update
     void Start()
@@ -21,5 +23,9 @@ public class Damageable : MonoBehaviour
     public void Kill()
     {
         Destroy(gameObject);
+        if (dieEffect != null) {
+            var fx = Instantiate(dieEffect);
+            fx.transform.position = transform.position;
+        }
     }
 }
