@@ -51,15 +51,19 @@ public class CollidingEntity : MonoBehaviour
     [SerializeField]
     private CollidingEntityConfig config;
 
+    private CharacterAnimator charAnimator;
+
     public void Init(CollidingEntityConfig config)
     {
         this.config = config;
         hasGravity = config.Gravity;
+        charAnimator = GetComponentInChildren<CharacterAnimator>();
     }
 
     public void Init()
     {
         hasGravity = config.Gravity;
+        charAnimator = GetComponentInChildren<CharacterAnimator>();
     }
 
     public void SetHorizontalInput(float input)
@@ -147,6 +151,26 @@ public class CollidingEntity : MonoBehaviour
             Vector2 loopPos = transform.position;
             loopPos.y = Camera.main.orthographicSize + size;
             transform.position = loopPos;
+        }
+
+        if (charAnimator != null)
+        {
+            if (verticalSpeed > 0.00f)
+            {
+                charAnimator.Animate(CharacterAnimation.JUMP);
+            }
+            else if (verticalSpeed < -0.00f && !isOnGround)
+            {
+                charAnimator.Animate(CharacterAnimation.FALL);
+            }
+            else if (Mathf.Abs(horizontalSpeed) > 0.0f)
+            {
+                charAnimator.Animate(CharacterAnimation.WALK);
+            }
+            else
+            {
+                charAnimator.Animate(CharacterAnimation.IDLE);
+            }
         }
     }
 
