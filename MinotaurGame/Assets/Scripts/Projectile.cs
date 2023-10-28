@@ -22,7 +22,6 @@ public class Projectile : MonoBehaviour
         // Vector3 pos = transform.position;
         // pos.x += currentSpeed * Time.deltaTime;
         // transform.position = pos;
-
         collidingEntity.SetHorizontalInput(currentSpeed * dir);
 
         if (Time.time - startLifetime > lifeTime)
@@ -37,14 +36,29 @@ public class Projectile : MonoBehaviour
         currentSpeed = 0f;
         IsActive = false;
         startLifetime = 0f;
+        collidingEntity.SetHorizontalInput(0);
+        collidingEntity.SetGravity(false);
+        collidingEntity.Reset();
+        currentSpeed = 0;
     }
 
     public void Activate(Vector3 pos, int direction)
     {
+        collidingEntity.Init();
         currentSpeed = projectileSpeed;
         transform.position = pos;
         IsActive = true;
         startLifetime = Time.time;
         dir = direction;
+        collidingEntity.SetGravity(false);
+        collidingEntity.SetWallCallback(HitWall);
+        collidingEntity.Reset();
+        collidingEntity.SetCheckFloor(false);
+    }
+
+    public void HitWall()
+    {
+        collidingEntity.SetGravity(true);
+        collidingEntity.SetCheckFloor(true);
     }
 }
