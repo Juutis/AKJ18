@@ -12,6 +12,11 @@ public class Projectile : MonoBehaviour
     private float lifeTime = 2f;
     private float startLifetime = 0f;
 
+    private float radius = 0.75f;
+
+    [SerializeField]
+    private LayerMask projectileTargetMask;
+
     [SerializeField]
     private CollidingEntity collidingEntity;
 
@@ -24,6 +29,18 @@ public class Projectile : MonoBehaviour
         if (Time.time - startLifetime > lifeTime)
         {
             Deactivate();
+        }
+
+        if (damage > 0)
+        {
+            RaycastHit2D hit = Physics2D.CircleCast(transform.position, radius, Vector2.zero, 0f, projectileTargetMask);
+            if (hit.collider != null)
+            {
+                Damageable damageableEntity = hit.collider.GetComponent<Damageable>();
+                
+                Debug.Log($"Killed {damageableEntity.name}!");
+                damageableEntity.Kill();
+            }
         }
     }
 
@@ -52,6 +69,7 @@ public class Projectile : MonoBehaviour
         collidingEntity.SetFloorCallback(HitFloor);
         collidingEntity.Reset();
         collidingEntity.SetCheckFloor(false);
+        damage = 1;
     }
 
     public void HitWall()

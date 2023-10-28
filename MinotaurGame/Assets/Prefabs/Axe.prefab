@@ -48,6 +48,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebf7d8564dc1b824aa92a98c89cfd7fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectileTargetMask:
+    serializedVersion: 2
+    m_Bits: 1024
   collidingEntity: {fileID: 7399079444857138022}
 --- !u!114 &7399079444857138022
 MonoBehaviour:
