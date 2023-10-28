@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be65270ce01a7b142b39061012f2f0db, type: 3}
+  m_Name: BasicCollidingEntity
+  m_EditorClassIdentifier: 
+  floorLayer:
+    serializedVersion: 2
+    m_Bits: 16
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 32
+  gravity: 1
+  gravityStrength: 50
+  jumpSpeed: 15
+  maxFallSpeed: 15
+  runSpeed: 5
