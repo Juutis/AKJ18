@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class CollidingEntity : MonoBehaviour
@@ -19,6 +20,8 @@ public class CollidingEntity : MonoBehaviour
 
     private bool isOnGround;
     private bool isTouchingWall;
+    private bool hasGravity = true;
+    private bool checkFloor = true;
 
     public bool IsTouchingWall { get { return isTouchingWall; } }
     public bool IsOnGround { get { return isOnGround; } }
@@ -41,6 +44,9 @@ public class CollidingEntity : MonoBehaviour
     private float horizontalInput = 0f;
     private float verticalInput = 0f;
 
+    private Action hitWallCallback;
+    private Action hitFloorCallback;
+
     private float size = 1f;
     [SerializeField]
     private CollidingEntityConfig config;
@@ -48,15 +54,50 @@ public class CollidingEntity : MonoBehaviour
     public void Init(CollidingEntityConfig config)
     {
         this.config = config;
+        hasGravity = config.Gravity;
+    }
+
+    public void Init()
+    {
+        hasGravity = config.Gravity;
     }
 
     public void SetHorizontalInput(float input)
     {
         horizontalInput = input;
     }
+
     public void SetVerticalInput(float input)
     {
         verticalInput = input;
+    }
+
+    public void SetWallCallback(Action callback)
+    {
+        hitWallCallback = callback;
+    }
+
+    public void SetFloorCallback(Action callback)
+    {
+        hitFloorCallback = callback;
+    }
+
+    public void SetGravity(bool gravity)
+    {
+        hasGravity = gravity;
+    }
+
+    public void SetCheckFloor(bool check)
+    {
+        checkFloor = check;
+    }
+
+    public void Reset()
+    {
+        fallSpeed = 0f;
+        horizontalSpeed = 0f;
+        verticalSpeed = 0f;
+        acceleration = 0f;
     }
 
     // Update is called once per frame
@@ -88,7 +129,7 @@ public class CollidingEntity : MonoBehaviour
             horizontalSpeed = 0f;
         }
 
-        if (config.Gravity && !isOnGround)
+        if (hasGravity && !isOnGround)
         {
             acceleration = Time.deltaTime * config.GravityStrength;
             verticalSpeed -= acceleration / 2.0f;
@@ -123,6 +164,11 @@ public class CollidingEntity : MonoBehaviour
         Vector3 botRaycastOrigin = wallRaycastPosition.position + new Vector3(0f, size * 0.5f);
 
         isTouchingWall = RayCastToWall(topRaycastOrigin) || RayCastToWall(botRaycastOrigin);
+
+        if (isTouchingWall)
+        {
+            hitWallCallback?.Invoke();
+        }
     }
 
     private bool RayCastToWall(Vector3 raycastOrigin)
@@ -166,7 +212,7 @@ public class CollidingEntity : MonoBehaviour
 
     private void CheckOnGroundStatus()
     {
-        if (verticalSpeed > 0)
+        if (verticalSpeed > 0 || !checkFloor)
         {
             isOnGround = false;
             return;
@@ -176,6 +222,11 @@ public class CollidingEntity : MonoBehaviour
         Vector3 rightRaycastOrigin = floorRaycastPosition.position + new Vector3(size * 0.5f, 0f);
 
         isOnGround = RaycastToGround(leftRaycastOrigin) || RaycastToGround(rightRaycastOrigin);
+
+        if (isOnGround)
+        {
+            hitFloorCallback?.Invoke();
+        }
     }
 
 

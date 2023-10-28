@@ -5,6 +5,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private CollidingEntity collidingEntity;
 
+    private void Start()
+    {
+        collidingEntity.Init();
+    }
+
     // Update is called once per frame
     void Update()
     {
