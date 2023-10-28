@@ -1278,6 +1278,9 @@ MonoBehaviour:
   - Tile: {fileID: 11400000, guid: 2750bc7cb07731e40a7b7c488189f00e, type: 2}
     Prefab: {fileID: 5497270287496648657, guid: 312963b80ee38bc46830d33dfb78d862, type: 3}
     LevelObjectType: 4
+  - Tile: {fileID: 11400000, guid: f27772a7e0376ed4984f1302b808657d, type: 2}
+    Prefab: {fileID: 9183450487971285731, guid: 54605c6669775054f88b5152335a10eb, type: 3}
+    LevelObjectType: 5
   levels:
   - {fileID: 5696150472486053629, guid: 40da4d71a8cda4a4baa505edeb7669aa, type: 3}
 --- !u!1 &1823478410

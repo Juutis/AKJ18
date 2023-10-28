@@ -55,6 +55,9 @@ public class Level : MonoBehaviour
                             Debug.Log("Spawned thread!");
                             threadCount += 1;
                             break;
+                        case LevelObjectType.FlyingEnemy:
+                            Debug.Log("Spawned A FUCKING BAT!");
+                            break;
                     }
                 }
             }
@@ -86,5 +89,6 @@ public enum LevelObjectType
     Player,
     Axe,
     Thread,
-    WalkingEnemy
+    WalkingEnemy,
+    FlyingEnemy
 }
