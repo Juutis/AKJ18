@@ -37,7 +37,6 @@ public class GameManager : MonoBehaviour
     private int scoreMultiplier = 1;
     private const int itemScore = 10;
     private const int killScore = 10;
-    private const int killComboMultiplier = 2;
     private float totalTime = 0f;
     private float levelTime = 0f;
 
@@ -170,10 +169,15 @@ public class GameManager : MonoBehaviour
 
     public void ScoreKill(int count)
     {
-        int scoreGained = itemScore * scoreMultiplier * count * killComboMultiplier;
+        int scoreGained = itemScore * scoreMultiplier * killComboMultiplier(count);
         UIScore.main.AddScore(scoreGained);
         currentScore += scoreGained;
         Debug.Log($"Score: {currentScore}");
+    }
+
+    private int killComboMultiplier(int count)
+    {
+        return (int)Mathf.Pow(2, count - 1);
     }
 
 }
