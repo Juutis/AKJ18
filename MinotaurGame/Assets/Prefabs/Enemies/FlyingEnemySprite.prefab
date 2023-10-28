@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3734696872412906976}
   - component: {fileID: 7358142586013353457}
   - component: {fileID: 2921423816546631817}
+  - component: {fileID: 5013421055236294518}
   m_Layer: 10
   m_Name: FlyingEnemySprite
   m_TagString: Untagged
@@ -168,3 +169,15 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.79, y: 0.91}
   m_EdgeRadius: 0
+--- !u!114 &5013421055236294518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9183450487971285731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 342493f891a4489439d0651ad85e618d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
