@@ -9,7 +9,6 @@ using UnityEngine.Tilemaps;
 
 public class GameManager : MonoBehaviour
 {
-
     public static GameManager main;
 
     void Awake()
@@ -34,6 +33,12 @@ public class GameManager : MonoBehaviour
     private Level currentLevel;
     private int currentLevelThreadCount;
     int lives = 5;
+    private int currentScore = 0;
+    private int killComboCounter = 0;
+    private int scoreMultiplier = 1;
+    private const int itemScore = 10;
+    private float totalTime = 0f;
+    private float levelTime = 0f;
 
     Timer timer;
 
@@ -135,18 +140,30 @@ public class GameManager : MonoBehaviour
 
     public void PickupItem(Item item)
     {
-        if (item.Type == ItemType.Thread)
-        {
-            threadCount += 1;
-            if (threadCount >= currentLevelThreadCount)
-            {
-                OpenDoor();
-            }
-        }
         if (item.Type == ItemType.Axe)
         {
             ammoCount += 1;
             UIAmmoHUD.main.AddAmmo();
+        }
+        else
+        {
+            if (item.Type == ItemType.Thread)
+            {
+                threadCount += 1;
+                if (threadCount >= currentLevelThreadCount)
+                {
+                    OpenDoor();
+                }
+            }
+            if (item.Type == ItemType.Bonus)
+            {
+                scoreMultiplier += 1;
+            }
+
+            int scoreGained = itemScore * scoreMultiplier;
+            UIScore.main.AddScore(scoreGained);
+            currentScore += scoreGained;
+            Debug.Log($"Score: {currentScore}");
         }
     }
 

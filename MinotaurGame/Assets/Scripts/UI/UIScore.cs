@@ -22,7 +22,7 @@ public class UIScore : MonoBehaviour
 
     int score = 0;
 
-    int targetScore;
+    int printScore;
     int startingScore;
 
     void Start()
@@ -32,13 +32,13 @@ public class UIScore : MonoBehaviour
 
     public void UpdateScoreDisplay()
     {
-        txtScore.text = $"{score}";
+        txtScore.text = $"{printScore}";
     }
 
     public void AddScore(int scoreChange)
     {
         startingScore = score;
-        targetScore = score + scoreChange;
+        score = score + scoreChange;
         isAnimatingScore = true;
         scoreAnimTimer = 0f;
     }
@@ -48,11 +48,11 @@ public class UIScore : MonoBehaviour
         if (isAnimatingScore)
         {
             scoreAnimTimer += Time.deltaTime;
-            score = (int)Mathf.Lerp(startingScore, targetScore, scoreAnimTimer / scoreAnimDuration);
+            printScore = (int)Mathf.Lerp(startingScore, score, scoreAnimTimer / scoreAnimDuration);
             if (scoreAnimTimer >= scoreAnimDuration)
             {
                 isAnimatingScore = false;
-                score = targetScore;
+                printScore = score;
             }
             UpdateScoreDisplay();
         }

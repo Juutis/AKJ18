@@ -189,8 +189,8 @@ public class CollidingEntity : MonoBehaviour
 
     private void CheckWallStatus()
     {
-        Vector3 topRaycastOrigin = wallRaycastPosition.position - new Vector3(0f, size * 0.5f);
-        Vector3 botRaycastOrigin = wallRaycastPosition.position + new Vector3(0f, size * 0.5f);
+        Vector3 topRaycastOrigin = wallRaycastPosition.position - new Vector3(0f, size * 0.45f);
+        Vector3 botRaycastOrigin = wallRaycastPosition.position + new Vector3(0f, size * 0.45f);
 
         isTouchingWall = RayCastToWall(topRaycastOrigin) || RayCastToWall(botRaycastOrigin);
 
