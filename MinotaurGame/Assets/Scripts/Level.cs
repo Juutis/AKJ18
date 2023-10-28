@@ -85,5 +85,8 @@ public enum LevelObjectType
     Axe,
     Thread,
     WalkingEnemy,
-    FlyingEnemy
+    FlyingEnemy,
+    Goblet,
+    Coin,
+    Vase
 }
