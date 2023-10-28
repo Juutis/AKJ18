@@ -40,9 +40,13 @@ public class GameManager : MonoBehaviour
     private float totalTime = 0f;
     private float levelTime = 0f;
 
+    Timer timer;
+
     void Start()
     {
         OpenLevel();
+        timer = new Timer();
+        UITimer.main.timer = timer;
     }
 
     public void PlayerDie()
@@ -76,6 +80,7 @@ public class GameManager : MonoBehaviour
 
     public void OpenLevel()
     {
+        UIAmmoHUD.main.Clear();
         ammoCount = 0;
         threadCount = 0;
         Level levelPrefab = levels[currentLevelIndex];
