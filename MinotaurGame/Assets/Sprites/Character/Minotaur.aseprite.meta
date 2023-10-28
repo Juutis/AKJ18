@@ -121,14 +121,14 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: Minotaur
     originalName: 
-    pivot: {x: 0.6, y: 0}
+    pivot: {x: 0.4166667, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 10
+      width: 12
       height: 15
     spriteID: 6611516a0c81fe149b6002965acda5a9
     spriteBone: []
@@ -151,9 +151,9 @@ ScriptedImporter:
     - name: Minotaur
       frameIndex: 0
       cellRect:
-        x: 2
+        x: 3
         y: 0
-        width: 10
+        width: 12
         height: 15
       spriteId: 6611516a0c81fe149b6002965acda5a9
     linkedCells: []
