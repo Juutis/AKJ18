@@ -27,6 +27,8 @@ public class ItemPicker : MonoBehaviour
             PickupableItem pickupItem = hit.collider.GetComponent<PickupableItem>();
             Item item = pickupItem.Item;
             Debug.Log($"Picked up {item.Name} (Type: {item.Type})!");
+            GameManager.main.PickupItem(item);
+
             pickupItem.Kill();
         }
     }
