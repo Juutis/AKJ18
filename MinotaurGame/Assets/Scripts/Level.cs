@@ -33,6 +33,7 @@ public class Level : MonoBehaviour
                     Tile tile = objectTilemap.GetTile<Tile>(localPlace);
                     ObjectToPrefab spawnObject = GameManager.main.GetObjectByTile(tile);
                     place.y += 0.5f;
+                    place.x += 0.5f;
                     GameObject createdObject = Instantiate(spawnObject.Prefab, place, Quaternion.identity, transform);
                     switch (spawnObject.LevelObjectType)
                     {
