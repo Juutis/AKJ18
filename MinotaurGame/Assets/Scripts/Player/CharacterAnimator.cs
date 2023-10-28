@@ -18,7 +18,6 @@ public class CharacterAnimator : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
-        PlayRandom();
     }
 
     private int current = 0;

@@ -29,5 +29,6 @@ public class Item
 
 public enum ItemType
 {
-    Axe
+    Axe,
+    Thread
 }
