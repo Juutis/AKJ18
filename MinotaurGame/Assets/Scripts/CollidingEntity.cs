@@ -110,6 +110,21 @@ public class CollidingEntity : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (horizontalInput > minHorizontalInput)
+        {
+            SetDirection(1);
+            horizontalSpeed = horizontalDirection * config.RunSpeed;
+        }
+        else if (horizontalInput < -minHorizontalInput)
+        {
+            SetDirection(-1);
+            horizontalSpeed = horizontalDirection * config.RunSpeed;
+        }
+        else
+        {
+            horizontalSpeed = 0f;
+        }
+
         CheckOnGroundStatus();
         CheckWallStatus();
         if (isOnGround && (verticalInput > minVerticalInput))
@@ -117,20 +132,7 @@ public class CollidingEntity : MonoBehaviour
             verticalSpeed = config.JumpSpeed;
         }
 
-        if (horizontalInput > minHorizontalInput)
-        {
-            SetDirection(1);
-            horizontalSpeed = horizontalDirection * config.RunSpeed * Time.deltaTime;
-        }
-        else if (horizontalInput < -minHorizontalInput)
-        {
-            SetDirection(-1);
-            horizontalSpeed = horizontalDirection * config.RunSpeed * Time.deltaTime;
-        }
-        else
-        {
-            horizontalSpeed = 0f;
-        }
+
         if (isTouchingWall)
         {
             horizontalSpeed = 0f;
@@ -144,7 +146,7 @@ public class CollidingEntity : MonoBehaviour
         Vector3 pos = transform.position;
         float vertSpeed = isOnGround ? Mathf.Clamp(verticalSpeed, 0, verticalSpeed) : verticalSpeed;
         fallSpeed = Mathf.Clamp(vertSpeed, -config.MaxFallSpeed, config.JumpSpeed);
-        horizontalMovementPerFrame = horizontalSpeed;
+        horizontalMovementPerFrame = horizontalSpeed * Time.deltaTime;
         pos.y += fallSpeed * Time.deltaTime;
         pos.x += horizontalMovementPerFrame;
         transform.position = pos;
@@ -200,7 +202,7 @@ public class CollidingEntity : MonoBehaviour
 
     private bool RayCastToWall(Vector3 raycastOrigin)
     {
-        float rayDistance = Mathf.Abs(horizontalMovementPerFrame) + size;
+        float rayDistance = Mathf.Abs(horizontalSpeed) * Time.deltaTime + size / 2.0f;
         RaycastHit2D ray = Physics2D.Raycast(raycastOrigin, horizontalDirection * Vector2.right, rayDistance, config.WallLayer);
         Debug.DrawLine(raycastOrigin, new Vector3(raycastOrigin.x + rayDistance * horizontalDirection, raycastOrigin.y, raycastOrigin.z), Color.blue);
         if (ray.collider != null)
@@ -245,8 +247,8 @@ public class CollidingEntity : MonoBehaviour
             return;
         }
 
-        Vector3 leftRaycastOrigin = floorRaycastPosition.position - new Vector3(size * 0.47f, 0f);
-        Vector3 rightRaycastOrigin = floorRaycastPosition.position + new Vector3(size * 0.47f, 0f);
+        Vector3 leftRaycastOrigin = floorRaycastPosition.position - new Vector3(size * 0.3f, 0f);
+        Vector3 rightRaycastOrigin = floorRaycastPosition.position + new Vector3(size * 0.3f, 0f);
 
         isOnGround = RaycastToGround(leftRaycastOrigin) || RaycastToGround(rightRaycastOrigin);
 
@@ -259,9 +261,10 @@ public class CollidingEntity : MonoBehaviour
 
     private bool RaycastToGround(Vector3 raycastOrigin)
     {
-        float rayDistance = Time.deltaTime * Mathf.Abs(fallSpeed * 2) + size;
-        RaycastHit2D ray = Physics2D.Raycast(raycastOrigin, Vector2.down, rayDistance, config.FloorLayer);
-        Debug.DrawLine(raycastOrigin, new Vector3(raycastOrigin.x, raycastOrigin.y - rayDistance, raycastOrigin.z), Color.red);
+        var currentFallSpeed = Mathf.Clamp(verticalSpeed, -config.MaxFallSpeed, 0.0f);
+        float rayDistance = 0.1f + Mathf.Abs(currentFallSpeed) * Time.deltaTime + Time.deltaTime * config.GravityStrength / 2.0f;
+        RaycastHit2D ray = Physics2D.Raycast(raycastOrigin + Vector3.up * 0.1f, Vector2.down, rayDistance, config.FloorLayer);
+        Debug.DrawLine(raycastOrigin + Vector3.up * 0.1f, new Vector3(raycastOrigin.x, raycastOrigin.y - rayDistance, raycastOrigin.z), Color.red);
         if (ray.collider != null)
         {
             if (!isOnGround)
