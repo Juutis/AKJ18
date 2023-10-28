@@ -24,6 +24,10 @@ public class ItemPicker : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale < 1f)
+        {
+            return;
+        }
         RaycastHit2D hit = Physics2D.CircleCast(transform.position, radius, Vector2.zero, 0f, itemMask);
         if (hit.collider != null)
         {
@@ -40,6 +44,7 @@ public class ItemPicker : MonoBehaviour
             Door door = hitDoor.collider.GetComponent<Door>();
             if (door != null && door.IsOpen)
             {
+                door.Disable();
                 GameManager.main.OpenNextLevel();
             }
         }

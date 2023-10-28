@@ -21,6 +21,11 @@ public class Door : MonoBehaviour
         }
     }
 
+    public void Disable()
+    {
+        isOpen = false;
+    }
+
     public void OpenAnimationFinished()
     {
         isOpen = true;
