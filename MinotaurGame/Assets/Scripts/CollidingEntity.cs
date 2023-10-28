@@ -273,12 +273,12 @@ public class CollidingEntity : MonoBehaviour
                 pos.y = ray.point.y + size * 0.5f;
                 transform.position = pos;
             }
-            Debug.Log("We are on ground.");
+            //          Debug.Log("We are on ground.");
             return true;
         }
         else
         {
-            Debug.Log("We are NOT on ground");
+            //            Debug.Log("We are NOT on ground");
             return false;
         }
     }

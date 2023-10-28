@@ -17,13 +17,14 @@ public class Damageable : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void Kill()
     {
         Destroy(gameObject);
-        if (dieEffect != null) {
+        if (dieEffect != null)
+        {
             var fx = Instantiate(dieEffect);
             fx.transform.position = transform.position;
         }

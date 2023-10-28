@@ -348,6 +348,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e095b7b4b2efab41883f455415d1746, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyTargetMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  flashSprite: {fileID: 498538768270981932}
 --- !u!114 &7583799678980838421
 MonoBehaviour:
   m_ObjectHideFlags: 0

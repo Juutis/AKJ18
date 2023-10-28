@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Scripting;
 using UnityEngine.Tilemaps;
@@ -32,10 +33,40 @@ public class GameManager : MonoBehaviour
     int threadCount = 0;
     private Level currentLevel;
     private int currentLevelThreadCount;
+    int lives = 5;
 
     void Start()
     {
         OpenLevel();
+    }
+
+    public void PlayerDie()
+    {
+        PlayerCharacter.main.Die();
+        lives -= 1;
+        if (lives < 1)
+        {
+            Debug.Log("Game over");
+        }
+        else
+        {
+            RespawnPlayer();
+        }
+    }
+
+    private GameObject playerPrefab;
+    private Vector3 playerPosition;
+    private Transform playerParent;
+    public void SetPlayerInfo(GameObject prefab, Vector3 position, Transform playerParent)
+    {
+        playerPrefab = prefab;
+        playerPosition = position;
+        this.playerParent = playerParent;
+    }
+
+    public void RespawnPlayer()
+    {
+        Instantiate(playerPrefab, playerPosition, Quaternion.identity, playerParent);
     }
 
     public void OpenLevel()

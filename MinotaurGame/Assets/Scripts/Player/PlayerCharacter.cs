@@ -10,4 +10,70 @@ public class PlayerCharacter : MonoBehaviour
         main = this;
     }
 
+    [SerializeField]
+    private LayerMask enemyTargetMask;
+    private float radius = 0.3f;
+
+    private bool isInvulnerable = true;
+
+    private float invulnerabilityDuration = 2f;
+    private float invulnerabilityTimer = 0f;
+
+    private float flashDuration = 0.2f;
+    private float flashTimer = 0f;
+
+    private Color originalColor;
+
+    private Color flashColor;
+    private Color previousColor;
+    private Color targetColor;
+
+    [SerializeField]
+    private SpriteRenderer flashSprite;
+
+    void Start()
+    {
+        originalColor = flashSprite.color;
+        flashColor = new Color(originalColor.r, originalColor.g, originalColor.b, 0.05f);
+        previousColor = originalColor;
+        targetColor = flashColor;
+    }
+
+    void Update()
+    {
+
+        if (isInvulnerable)
+        {
+            invulnerabilityTimer += Time.deltaTime;
+            flashTimer += Time.deltaTime;
+            flashSprite.color = Color.Lerp(previousColor, targetColor, flashTimer / flashDuration);
+            if (flashTimer >= flashDuration)
+            {
+                flashTimer = 0f;
+                targetColor = previousColor;
+                previousColor = flashSprite.color;
+            }
+            if (invulnerabilityTimer >= invulnerabilityDuration)
+            {
+                flashSprite.color = originalColor;
+                isInvulnerable = false;
+            }
+            return;
+        }
+
+        RaycastHit2D hit = Physics2D.CircleCast(transform.position, radius, Vector2.zero, 0f, enemyTargetMask);
+        if (hit.collider != null)
+        {
+            Damageable damageableEntity = hit.collider.GetComponent<Damageable>();
+
+            Debug.Log($"Killed player because we hit {damageableEntity}!");
+            GameManager.main.PlayerDie();
+        }
+    }
+
+    public void Die()
+    {
+        Destroy(gameObject);
+    }
+
 }
