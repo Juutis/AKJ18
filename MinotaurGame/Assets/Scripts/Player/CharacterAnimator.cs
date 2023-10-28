@@ -14,6 +14,9 @@ public class CharacterAnimator : MonoBehaviour
         {CharacterAnimation.FALL, "fall"}
     };
 
+    [SerializeField]
+    private ParticleSystem jumpEffect;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +40,14 @@ public class CharacterAnimator : MonoBehaviour
 
     public void Animate(CharacterAnimation animation) {
         if (animation != currentAnimation) {
+            if (jumpEffect != null) {
+                if (currentAnimation == CharacterAnimation.FALL) {
+                    jumpEffect.Play();
+                } else if (animation == CharacterAnimation.JUMP) {
+                    jumpEffect.Play();
+                }
+            }
+
             currentAnimation = animation;
             anim.Play(animToState[animation]);
         }

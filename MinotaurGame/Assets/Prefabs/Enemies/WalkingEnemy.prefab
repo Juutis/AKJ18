@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 674176083103455163}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,9 +44,7 @@ GameObject:
   - component: {fileID: 1502018448348482426}
   - component: {fileID: 460266111637756949}
   - component: {fileID: 5994862439382870119}
-  - component: {fileID: 5210591040742139286}
-  - component: {fileID: 817167532011127458}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: WalkingEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,64 +97,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collidingEntity: {fileID: 460266111637756949}
---- !u!114 &5210591040742139286
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5497270287496648657}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 342493f891a4489439d0651ad85e618d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!61 &817167532011127458
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5497270287496648657}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 0.5, y: 1}
-  m_EdgeRadius: 0
 --- !u!1 &6270040588832565335
 GameObject:
   m_ObjectHideFlags: 0
@@ -166,7 +106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6346329915571350041}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: wallRayOrigin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,7 +138,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3570428063438897442}
   - component: {fileID: 1749919373784100344}
-  m_Layer: 10
+  - component: {fileID: 4938578973832988531}
+  - component: {fileID: 7572971391161993452}
+  m_Layer: 0
   m_Name: icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -272,6 +214,40 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &4938578973832988531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6889617040145447493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7048e5bc6a2944840acc4ddf674f94fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!95 &7572971391161993452
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6889617040145447493}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6ccd7236b65ae9945b1c5bcef21ec2d6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &9173553641564702886
 GameObject:
   m_ObjectHideFlags: 0
@@ -281,7 +257,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3943075951136420943}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: floorRayOrigin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
