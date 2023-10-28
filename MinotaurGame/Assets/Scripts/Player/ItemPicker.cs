@@ -13,6 +13,9 @@ public class ItemPicker : MonoBehaviour
     [SerializeField]
     private LayerMask itemMask;
 
+    [SerializeField]
+    private LayerMask doorMask;
+
     /*void OnDrawGizmos()
     {
         Gizmos.color = new Color(0f, 1f, 0f, 0.2f);
@@ -30,6 +33,15 @@ public class ItemPicker : MonoBehaviour
             GameManager.main.PickupItem(item);
 
             pickupItem.Kill();
+        }
+        RaycastHit2D hitDoor = Physics2D.CircleCast(transform.position, radius, Vector2.zero, 0f, doorMask);
+        if (hitDoor.collider != null)
+        {
+            Door door = hitDoor.collider.GetComponent<Door>();
+            if (door != null && door.IsOpen)
+            {
+                GameManager.main.OpenNextLevel();
+            }
         }
     }
 
