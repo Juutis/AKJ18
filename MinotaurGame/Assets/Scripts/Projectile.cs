@@ -14,6 +14,8 @@ public class Projectile : MonoBehaviour
 
     private float radius = 0.75f;
 
+    private int comboKillCount = 0;
+
     [SerializeField]
     private LayerMask projectileTargetMask;
 
@@ -41,6 +43,7 @@ public class Projectile : MonoBehaviour
 
                 Debug.Log($"Killed {damageableEntity.name}!");
                 damageableEntity.Kill();
+                comboKillCount++;
             }
         }
     }
@@ -72,6 +75,7 @@ public class Projectile : MonoBehaviour
         collidingEntity.Reset();
         collidingEntity.SetCheckFloor(false);
         damage = 1;
+        comboKillCount = 0;
     }
 
     public void HitWall()
@@ -89,5 +93,7 @@ public class Projectile : MonoBehaviour
             floorHasBeenHit = true;
         }
         Deactivate();
+        GameManager.main.ScoreKill(comboKillCount);
+        comboKillCount = 0;
     }
 }

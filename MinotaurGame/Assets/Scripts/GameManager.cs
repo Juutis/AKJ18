@@ -34,9 +34,9 @@ public class GameManager : MonoBehaviour
     private int currentLevelThreadCount;
     int lives = 5;
     private int currentScore = 0;
-    private int killComboCounter = 0;
     private int scoreMultiplier = 1;
     private const int itemScore = 10;
+    private const int killScore = 10;
     private float totalTime = 0f;
     private float levelTime = 0f;
 
@@ -165,6 +165,19 @@ public class GameManager : MonoBehaviour
             currentScore += scoreGained;
             Debug.Log($"Score: {currentScore}");
         }
+    }
+
+    public void ScoreKill(int count)
+    {
+        int scoreGained = itemScore * scoreMultiplier * killComboMultiplier(count);
+        UIScore.main.AddScore(scoreGained);
+        currentScore += scoreGained;
+        Debug.Log($"Score: {currentScore}");
+    }
+
+    private int killComboMultiplier(int count)
+    {
+        return (int)Mathf.Pow(2, count - 1);
     }
 
 }
