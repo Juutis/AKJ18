@@ -59,6 +59,7 @@ public class Projectile : MonoBehaviour
 
     public void Activate(Vector3 pos, int direction)
     {
+        floorHasBeenHit = false;
         collidingEntity.Init();
         currentSpeed = projectileSpeed;
         transform.position = pos;
@@ -82,8 +83,11 @@ public class Projectile : MonoBehaviour
     public void HitFloor()
     {
         damage = 0;
-
-        PickupableItem pickupItem = Instantiate(pickupItemPrefab, transform.position, Quaternion.identity);
+        if (!floorHasBeenHit)
+        {
+            PickupableItem pickupItem = Instantiate(pickupItemPrefab, transform.position, Quaternion.identity);
+            floorHasBeenHit = true;
+        }
         Deactivate();
     }
 }
