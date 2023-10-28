@@ -8,6 +8,8 @@ public class CollidingEntity : MonoBehaviour
         //Application.targetFrameRate = 5;
     }
 
+    public int HorizontalDirection { get { return horizontalDirection; } }
+
     private float horizontalSpeed = 0f;
     private float verticalSpeed = 0f;
 
