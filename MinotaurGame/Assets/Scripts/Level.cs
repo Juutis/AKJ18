@@ -42,6 +42,7 @@ public class Level : MonoBehaviour
                             break;
                         case LevelObjectType.Player:
                             PlayerCharacter player = createdObject.GetComponent<PlayerCharacter>();
+                            GameManager.main.SetPlayerInfo(spawnObject.Prefab, place, transform);
                             Debug.Log("player!");
                             break;
                         case LevelObjectType.WalkingEnemy:
@@ -63,12 +64,6 @@ public class Level : MonoBehaviour
             }
         }
     }
-
-    public void SpawnObject()
-    {
-
-    }
-
     public void Kill()
     {
         Destroy(gameObject);
