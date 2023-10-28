@@ -25,6 +25,9 @@ public class CollidingEntity : MonoBehaviour
 
     public bool IsTouchingWall { get { return isTouchingWall; } }
     public bool IsOnGround { get { return isOnGround; } }
+
+    public bool HasGravity { get { return hasGravity; } }
+
     private float acceleration = 0f;
 
     private int horizontalDirection = 1;
