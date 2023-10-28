@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
     private List<Level> levels;
     private int currentLevelIndex = 0;
 
+    int ammoCount = 0;
+
     int threadCount = 0;
     private Level currentLevel;
     private int currentLevelThreadCount;
@@ -38,6 +40,7 @@ public class GameManager : MonoBehaviour
 
     public void OpenLevel()
     {
+        ammoCount = 0;
         threadCount = 0;
         Level levelPrefab = levels[currentLevelIndex];
         if (currentLevel != null)
@@ -48,6 +51,17 @@ public class GameManager : MonoBehaviour
         currentLevel.Init();
         Debug.Log(currentLevelThreadCount);
         currentLevelThreadCount = currentLevel.ThreadCount;
+    }
+
+    public bool SpendProjectile()
+    {
+        if (ammoCount > 0)
+        {
+            ammoCount -= 1;
+            UIAmmoHUD.main.RemoveAmmo();
+            return true;
+        }
+        return false;
     }
 
     public void OpenDoor()
@@ -77,6 +91,11 @@ public class GameManager : MonoBehaviour
             {
                 OpenDoor();
             }
+        }
+        if (item.Type == ItemType.Axe)
+        {
+            ammoCount += 1;
+            UIAmmoHUD.main.AddAmmo();
         }
     }
 
