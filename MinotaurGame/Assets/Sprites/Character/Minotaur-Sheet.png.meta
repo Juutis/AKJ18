@@ -250,6 +250,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Minotaur-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9604410d4c578c140b35043c9c31dd04
+      internalID: 1972477504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -267,6 +288,7 @@ TextureImporter:
       Minotaur-Sheet_3: 8761530300989451739
       Minotaur-Sheet_4: 1430585542978550799
       Minotaur-Sheet_5: -7632884485181341146
+      Minotaur-Sheet_6: 1972477504
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -127,7 +127,7 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 4
-      y: 4
+      y: 50
       width: 12
       height: 15
     spriteID: 6611516a0c81fe149b6002965acda5a9
@@ -138,7 +138,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 4}
+    uvTransform: {x: 4, y: 50}
   - name: Minotaur_Frame_1
     originalName: 
     pivot: {x: 0.4166667, y: 0}
@@ -146,8 +146,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 24
-      y: 27
+      x: 25
+      y: 4
       width: 12
       height: 14
     spriteID: 1c6ee9f2709aecc43be6439da5fbd7a3
@@ -158,7 +158,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 24, y: 27}
+    uvTransform: {x: 25, y: 4}
   - name: Minotaur_Frame_2
     originalName: 
     pivot: {x: 0.4166667, y: 0}
@@ -166,8 +166,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 24
-      y: 4
+      x: 4
+      y: 73
       width: 12
       height: 15
     spriteID: 234d73b6bebd21647ae72cbdbc0f134a
@@ -178,7 +178,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 24, y: 4}
+    uvTransform: {x: 4, y: 73}
   - name: Minotaur_Frame_3
     originalName: 
     pivot: {x: 0.4166667, y: 0}
@@ -186,8 +186,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 44
-      y: 4
+      x: 4
+      y: 96
       width: 12
       height: 15
     spriteID: 7a4bc7b8361a62c4ba226336436e8852
@@ -198,7 +198,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 44, y: 4}
+    uvTransform: {x: 4, y: 96}
   - name: Minotaur_Frame_4
     originalName: 
     pivot: {x: 0.4166667, y: 0}
@@ -206,8 +206,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 44
-      y: 27
+      x: 25
+      y: 26
       width: 12
       height: 14
     spriteID: c209fe8ff8276e24fbd430159be02c46
@@ -218,19 +218,39 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 44, y: 27}
+    uvTransform: {x: 25, y: 26}
   - name: Minotaur_Frame_5
     originalName: 
-    pivot: {x: 0.4166667, y: 0}
+    pivot: {x: 0.53846157, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 13
+      height: 15
+    spriteID: 92218d412b02b1c4db6c637103f76bc5
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 4}
+  - name: Minotaur_Frame_6
+    originalName: 
+    pivot: {x: 0.53846157, y: -0.06666667}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 27
-      width: 12
+      width: 13
       height: 15
-    spriteID: 92218d412b02b1c4db6c637103f76bc5
+    spriteID: 3e63e1bc39d89b149ba78980b92b454b
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -291,11 +311,19 @@ ScriptedImporter:
     - name: Minotaur_Frame_5
       frameIndex: 5
       cellRect:
-        x: 3
+        x: 1
         y: 0
-        width: 12
+        width: 13
         height: 15
       spriteId: 92218d412b02b1c4db6c637103f76bc5
+    - name: Minotaur_Frame_6
+      frameIndex: 6
+      cellRect:
+        x: 1
+        y: 1
+        width: 13
+        height: 15
+      spriteId: 3e63e1bc39d89b149ba78980b92b454b
     linkedCells: []
     parentIndex: -1
   platformSettings: []
