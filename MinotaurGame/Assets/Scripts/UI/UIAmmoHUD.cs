@@ -17,6 +17,16 @@ public class UIAmmoHUD : MonoBehaviour
         main = this;
     }
 
+    public void Clear()
+    {
+        for (int index = ammoList.Count - 1; index >= 0; index -= 1)
+        {
+            GameObject ammo = ammoList[index];
+            ammoList.Remove(ammo);
+            Destroy(ammo);
+        }
+    }
+
     public void AddAmmo()
     {
         GameObject ammo = Instantiate(uiAmmoPrefab, ammoContainer);
