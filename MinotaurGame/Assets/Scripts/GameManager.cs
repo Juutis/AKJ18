@@ -45,9 +45,12 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        OpenLevel();
-        timer = new Timer();
-        UITimer.main.timer = timer;
+        UIManager.main.OpenCurtains(delegate
+        {
+            OpenLevel();
+            timer = new Timer();
+            UITimer.main.timer = timer;
+        });
     }
 
     public void PlayerDie()
@@ -85,10 +88,7 @@ public class GameManager : MonoBehaviour
         ammoCount = 0;
         threadCount = 0;
         Level levelPrefab = levels[currentLevelIndex];
-        if (currentLevel != null)
-        {
-            currentLevel.Kill();
-        }
+
         currentLevel = Instantiate(levelPrefab, Vector3.zero, Quaternion.identity);
         currentLevel.Init();
         Debug.Log(currentLevelThreadCount);
@@ -113,6 +113,8 @@ public class GameManager : MonoBehaviour
 
     public void OpenNextLevel()
     {
+        Time.timeScale = 0f;
+        timer.Pause();
         currentLevelIndex += 1;
         if (currentLevelIndex >= levels.Count)
         {
@@ -120,7 +122,20 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            OpenLevel();
+            UIManager.main.CloseCurtains(delegate
+            {
+                if (currentLevel != null)
+                {
+                    currentLevel.Kill();
+                }
+                OpenLevel();
+                UIManager.main.OpenCurtains(delegate
+                {
+                    timer.Unpause();
+                    Time.timeScale = 1f;
+                });
+            }
+            );
         }
     }
 
