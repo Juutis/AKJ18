@@ -23,6 +23,14 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Transform poppingTextContainer;
 
+    [SerializeField]
+    private UILevelScoreDisplay scoreDisplay;
+
+    public void ShowLevelScore(int levelIndex, LevelScore levelScore)
+    {
+        scoreDisplay.Show(levelIndex, levelScore);
+    }
+
     public void ShowPoppingText(Vector3 position, string message)
     {
         UIPoppingText poppingText = Instantiate(poppingTextPrefab, poppingTextContainer);
@@ -31,6 +39,7 @@ public class UIManager : MonoBehaviour
 
     public void OpenCurtains(AfterAnimationCallback afterAnimation)
     {
+        scoreDisplay.Hide();
         MusicPlayer.main.LevelFadeIn();
         afterOpenCallback = afterAnimation;
         animator.SetTrigger("Open");
@@ -52,6 +61,18 @@ public class UIManager : MonoBehaviour
         Debug.Log("curtainOpenCalle");
         afterOpenCallback();
     }
+}
+
+[System.Serializable]
+public class LevelScore
+{
+    public int ScoreGained;
+    public string LevelTime;
+    public string TotalTime;
+    public int BonusFromTime;
+    public int Deaths;
+    public int TotalDeaths;
+    public int TotalScore;
 }
 
 public delegate void AfterAnimationCallback();

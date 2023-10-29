@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Scripting;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.Tilemaps;
 
 public class GameManager : MonoBehaviour
@@ -49,37 +50,63 @@ public class GameManager : MonoBehaviour
 
     private bool playerDead = false;
 
+    private bool waitForInput = false;
+    private AfterWaitCallback afterWaitForInput;
+
+    private int deathsThisLevel = 0;
+    private int totalDeaths = 0;
+
     void Start()
     {
         Init();
     }
 
+    void Update()
+    {
+        if (waitForInput)
+        {
+            if (Input.anyKey)
+            {
+                waitForInput = false;
+                if (afterWaitForInput != null)
+                {
+                    afterWaitForInput();
+                    afterWaitForInput = null;
+                }
+            }
+        }
+    }
+
     void Init(bool resetTimer = true)
     {
-        Time.timeScale = 0f;
-        Debug.Log("init clled");
-        Debug.Log("We are HERE!");
-        lives = startingLives;
-        UILifeDisplay.main.Clear();
-        Debug.Log($"Start with {lives}");
-        for (int i = lives; i > 0; i -= 1)
+        waitForInput = true;
+        afterWaitForInput = delegate
         {
-            UILifeDisplay.main.AddLife();
-        }
-        OpenLevel();
-        UIManager.main.OpenCurtains(delegate
-        {
-            Time.timeScale = 1f;
-            if (timer != null && !resetTimer)
+            Time.timeScale = 0f;
+            Debug.Log("init clled");
+            Debug.Log("We are HERE!");
+            lives = startingLives;
+            UILifeDisplay.main.Clear();
+            Debug.Log($"Start with {lives}");
+            for (int i = lives; i > 0; i -= 1)
             {
-                timer.Unpause();
+                UILifeDisplay.main.AddLife();
             }
-            else
+            OpenLevel();
+            UIManager.main.OpenCurtains(delegate
             {
-                timer = new Timer();
-            }
-            UITimer.main.timer = timer;
-        });
+                Time.timeScale = 1f;
+                if (timer != null && !resetTimer)
+                {
+                    timer.Unpause();
+                }
+                else
+                {
+                    timer = new Timer();
+                }
+                UITimer.main.timer = timer;
+            });
+        };
     }
 
     public void ContinueAction()
@@ -102,6 +129,8 @@ public class GameManager : MonoBehaviour
     public void PlayerDie()
     {
         if (playerDead) return;
+        deathsThisLevel += 1;
+        totalDeaths += 1;
         playerDead = true;
         UILifeDisplay.main.RemoveLife();
         PlayerCharacter.main.Die();
@@ -152,6 +181,7 @@ public class GameManager : MonoBehaviour
     public void OpenLevel()
     {
         UIAmmoHUD.main.Clear();
+        deathsThisLevel = 0;
         ammoCount = 0;
         threadCount = 0;
         Level levelPrefab = levels[currentLevelIndex];
@@ -214,15 +244,29 @@ public class GameManager : MonoBehaviour
                 {
                     currentLevel.Kill();
                 }
-                OpenLevel();
-                UIManager.main.OpenCurtains(delegate
+                UIManager.main.ShowLevelScore(currentLevelIndex - 1, new LevelScore
                 {
-                    timer.Unpause();
-                    Time.timeScale = 1f;
-
-                    previousLevelsScore = currentScore;
-                    timeBeforeCurrentLevel = currentTime;
+                    LevelTime = Timer.GetFormattedString(levelTime),
+                    TotalTime = Timer.GetFormattedString(currentTime),
+                    ScoreGained = levelScore,
+                    BonusFromTime = timeBonus,
+                    Deaths = deathsThisLevel,
+                    TotalDeaths = totalDeaths,
+                    TotalScore = currentScore
                 });
+                OpenLevel();
+                waitForInput = true;
+                afterWaitForInput = delegate
+                {
+                    UIManager.main.OpenCurtains(delegate
+                    {
+                        timer.Unpause();
+                        Time.timeScale = 1f;
+
+                        previousLevelsScore = currentScore;
+                        timeBeforeCurrentLevel = currentTime;
+                    });
+                };
             }
             );
         }
@@ -273,6 +317,8 @@ public class GameManager : MonoBehaviour
     }
 
 }
+
+public delegate void AfterWaitCallback();
 
 [Serializable]
 public class ObjectToPrefab
