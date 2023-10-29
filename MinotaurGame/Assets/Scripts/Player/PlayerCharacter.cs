@@ -12,6 +12,9 @@ public class PlayerCharacter : MonoBehaviour
 
     [SerializeField]
     private LayerMask enemyTargetMask;
+    [SerializeField]
+    private LayerMask enemyProjectileTargetMask;
+
     private float radius = 0.3f;
 
     private bool isInvulnerable = true;
@@ -71,6 +74,13 @@ public class PlayerCharacter : MonoBehaviour
             Damageable damageableEntity = hit.collider.GetComponent<Damageable>();
 
             Debug.Log($"Killed player because we hit {damageableEntity}!");
+            GameManager.main.PlayerDie();
+        }
+
+        RaycastHit2D hitProjectile = Physics2D.CircleCast(transform.position, radius, Vector2.zero, 0f, enemyProjectileTargetMask);
+        if (hitProjectile.collider != null)
+        {
+            Debug.Log($"Killed player because we hit enemy projectile!");
             GameManager.main.PlayerDie();
         }
     }
