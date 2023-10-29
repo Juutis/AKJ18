@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class CollidingEntity : MonoBehaviour
@@ -123,15 +124,22 @@ public class CollidingEntity : MonoBehaviour
         {
             SetDirection(1);
             horizontalSpeed = horizontalDirection * config.RunSpeed;
+            if (horizontalDirection < 0) {
+                coyoteTimer = 0.0f;
+            }
         }
         else if (horizontalInput < -minHorizontalInput)
         {
             SetDirection(-1);
             horizontalSpeed = horizontalDirection * config.RunSpeed;
+            if (horizontalDirection > 0) {
+                coyoteTimer = 0.0f;
+            }
         }
         else
         {
             horizontalSpeed = 0f;
+            coyoteTimer = 0.0f;
         }
 
         CheckOnGroundStatus();
