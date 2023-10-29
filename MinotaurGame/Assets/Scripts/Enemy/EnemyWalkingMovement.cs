@@ -19,18 +19,15 @@ public class MovingEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (collidingEntity.IsOnGround || !collidingEntity.HasGravity)
+        collidingEntity.SetHorizontalInput(direction * horizInput);
+        if (canChangeDirection && collidingEntity.IsTouchingWall)
         {
-            collidingEntity.SetHorizontalInput(direction * horizInput);
-            if (canChangeDirection && collidingEntity.IsTouchingWall)
-            {
-                direction = -direction;
-                canChangeDirection = false;
-            }
-            if (!collidingEntity.IsTouchingWall)
-            {
-                canChangeDirection = true;
-            }
+            direction = -direction;
+            canChangeDirection = false;
+        }
+        if (!collidingEntity.IsTouchingWall)
+        {
+            canChangeDirection = true;
         }
     }
 }
