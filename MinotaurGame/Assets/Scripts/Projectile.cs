@@ -91,7 +91,7 @@ public class Projectile : MonoBehaviour
         damage = 0;
         if (!floorHasBeenHit)
         {
-            PickupableItem pickupItem = Instantiate(pickupItemPrefab, transform.position, Quaternion.identity);
+            PickupableItem pickupItem = Instantiate(pickupItemPrefab, transform.position, Quaternion.identity, transform.parent);
             floorHasBeenHit = true;
         }
         Deactivate();
