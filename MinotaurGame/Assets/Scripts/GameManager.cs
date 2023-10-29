@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
         Init();
     }
 
-    void Init()
+    void Init(bool resetTimer = true)
     {
         Time.timeScale = 0f;
         Debug.Log("init clled");
@@ -69,12 +69,15 @@ public class GameManager : MonoBehaviour
         OpenLevel();
         UIManager.main.OpenCurtains(delegate
         {
-            if (timer != null)
-            {
-                timer = null;
-            }
             Time.timeScale = 1f;
-            timer = new Timer();
+            if (timer != null && !resetTimer)
+            {
+                timer.Unpause();
+            }
+            else
+            {
+                timer = new Timer();
+            }
             UITimer.main.timer = timer;
         });
     }
@@ -88,7 +91,7 @@ public class GameManager : MonoBehaviour
         }
         UIScore.main.AddScore(-currentScore);
         currentScore = 0;
-        Init();
+        Init(false);
     }
     public void RestartAction()
     {
