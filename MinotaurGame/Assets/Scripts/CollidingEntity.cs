@@ -98,8 +98,10 @@ public class CollidingEntity : MonoBehaviour
         hasGravity = gravity;
     }
 
-    public void UseCoyoteTime(bool use) {
-        if (!use) {
+    public void UseCoyoteTime(bool use)
+    {
+        if (!use)
+        {
             coyoteTime = -1.0f;
         }
     }
@@ -124,7 +126,8 @@ public class CollidingEntity : MonoBehaviour
         {
             SetDirection(1);
             horizontalSpeed = horizontalDirection * config.RunSpeed;
-            if (horizontalDirection < 0) {
+            if (horizontalDirection < 0)
+            {
                 coyoteTimer = 0.0f;
             }
         }
@@ -132,7 +135,8 @@ public class CollidingEntity : MonoBehaviour
         {
             SetDirection(-1);
             horizontalSpeed = horizontalDirection * config.RunSpeed;
-            if (horizontalDirection > 0) {
+            if (horizontalDirection > 0)
+            {
                 coyoteTimer = 0.0f;
             }
         }
@@ -146,6 +150,7 @@ public class CollidingEntity : MonoBehaviour
         CheckWallStatus();
         if (isReallyOnGround() && (verticalInput > minVerticalInput))
         {
+            //SoundManager.main.PlaySound(GameSoundType.Jump);
             verticalSpeed = config.JumpSpeed;
             coyoteTimer = 0.0f;
         }
@@ -302,7 +307,8 @@ public class CollidingEntity : MonoBehaviour
         }
     }
 
-    private bool isReallyOnGround() {
+    private bool isReallyOnGround()
+    {
         return isOnGround || coyoteTimer > Time.time;
     }
 }

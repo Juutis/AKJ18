@@ -11,14 +11,15 @@ public class BulletTime : MonoBehaviour
     private float strength = 0.9f;
     private bool triggered = false;
 
-    void Awake() {
+    void Awake()
+    {
         Main = this;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -28,14 +29,18 @@ public class BulletTime : MonoBehaviour
 
         var t = (timer + duration - Time.time) / duration;
 
-        if (t >= 0.0f) {
-            Time.timeScale = 1 - (t * strength);
-        } else {
-            Time.timeScale = 1.0f;
+        if (t >= 0.0f)
+        {
+            GameManager.main.SetTimescale(1 - (t * strength));
+        }
+        else
+        {
+            GameManager.main.SetTimescale(1);
         }
     }
 
-    public void Trigger() {
+    public void Trigger()
+    {
         timer = Time.time;
         triggered = true;
     }

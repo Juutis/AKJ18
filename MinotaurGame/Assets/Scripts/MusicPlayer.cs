@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Scripting;
 
 public class MusicPlayer : MonoBehaviour
@@ -24,13 +25,24 @@ public class MusicPlayer : MonoBehaviour
 
     private List<AudioFade> fades = new List<AudioFade>();
 
-    private float gameMusicVolume = 0;
+    private float gameMusicVolume = 0.5f;
     private float fadeInDuration = 0.5f;
 
     private AfterFadeCallback afterFadeCallback;
 
+
+    private IEnumerator InvokeRealtimeCoroutine(UnityAction action, float seconds)
+    {
+        yield return new WaitForSecondsRealtime(seconds);
+        if (action != null)
+        {
+            action();
+        }
+    }
+
     void Start()
     {
+        FadeInGameMusic();
     }
 
 
@@ -45,16 +57,17 @@ public class MusicPlayer : MonoBehaviour
         fades.Add(fade);
     }
 
-    public void LevelFadeIn(float invokeTime = 0.5f)
+    /*public void LevelFadeIn(float invokeTime = 0.5f)
     {
         Invoke("FadeInGameMusic", invokeTime);
-    }
+    }*/
     public void LevelFadeOut()
     {
         FadeOutGameMusic(delegate
         {
             PlayTransitionMusic();
-        }, 0.2f);
+            StartCoroutine(InvokeRealtimeCoroutine(FadeInGameMusic, 2f));
+        }, 0.1f);
     }
 
     private void FadeOutGameMusic(AfterFadeCallback afterFadeCallback, float duration = 0.5f)
@@ -91,6 +104,9 @@ public class MusicPlayer : MonoBehaviour
     }
 
 }
+
+
+
 
 public delegate void AfterFadeCallback();
 

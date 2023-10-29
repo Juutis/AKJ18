@@ -39,13 +39,15 @@ public class UIManager : MonoBehaviour
 
     public void OpenCurtains(AfterAnimationCallback afterAnimation)
     {
+        SoundManager.main.PlaySound(GameSoundType.CurtainsOpen);
         scoreDisplay.Hide();
-        MusicPlayer.main.LevelFadeIn();
+        //MusicPlayer.main.LevelFadeIn();
         afterOpenCallback = afterAnimation;
         animator.SetTrigger("Open");
     }
     public void CloseCurtains(AfterAnimationCallback afterAnimation)
     {
+        SoundManager.main.PlaySound(GameSoundType.CurtainsClose);
         MusicPlayer.main.LevelFadeOut();
         afterCloseCallback = afterAnimation;
         animator.SetTrigger("Close");

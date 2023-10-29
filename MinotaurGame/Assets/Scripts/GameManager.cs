@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
         waitForInput = true;
         afterWaitForInput = delegate
         {
-            Time.timeScale = 0f;
+            FreezeTime();
             Debug.Log("init clled");
             Debug.Log("We are HERE!");
             lives = startingLives;
@@ -95,7 +95,7 @@ public class GameManager : MonoBehaviour
             OpenLevel();
             UIManager.main.OpenCurtains(delegate
             {
-                Time.timeScale = 1f;
+                ResumeTime();
                 if (timer != null && !resetTimer)
                 {
                     timer.Unpause();
@@ -151,7 +151,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         timer.Pause();
-        Time.timeScale = 0f;
+        FreezeTime();
         UIManager.main.CloseCurtains(delegate
         {
             UIGameOver.main.Show();
@@ -208,9 +208,32 @@ public class GameManager : MonoBehaviour
         currentLevel.OpenDoor();
     }
 
+    private bool isPaused = false;
+    private void ResumeTime()
+    {
+        isPaused = false;
+        Time.timeScale = 1f;
+        Debug.Log("Resume time");
+    }
+
+    private void FreezeTime()
+    {
+        isPaused = true;
+        Time.timeScale = 0f;
+        Debug.Log("FREEZE time");
+    }
+
+    public void SetTimescale(float timeScale)
+    {
+        if (!isPaused)
+        {
+            Time.timeScale = timeScale;
+        }
+    }
+
     public void OpenNextLevel()
     {
-        Time.timeScale = 0f;
+        FreezeTime();
         timer.Pause();
         currentLevelIndex += 1;
         scoreMultiplier = 1;
@@ -261,7 +284,7 @@ public class GameManager : MonoBehaviour
                     UIManager.main.OpenCurtains(delegate
                     {
                         timer.Unpause();
-                        Time.timeScale = 1f;
+                        ResumeTime();
 
                         previousLevelsScore = currentScore;
                         timeBeforeCurrentLevel = currentTime;
@@ -278,6 +301,7 @@ public class GameManager : MonoBehaviour
         {
             ammoCount += 1;
             UIAmmoHUD.main.AddAmmo();
+            SoundManager.main.PlaySound(GameSoundType.CollectAxe);
         }
         else if (item.Type == ItemType.Heart)
         {
@@ -289,13 +313,16 @@ public class GameManager : MonoBehaviour
             if (item.Type == ItemType.Thread)
             {
                 threadCount += 1;
+                SoundManager.main.PlaySound(GameSoundType.Collect);
                 if (threadCount >= currentLevelThreadCount)
                 {
+                    SoundManager.main.PlaySound(GameSoundType.OpenDoor);
                     OpenDoor();
                 }
             }
             if (item.Type == ItemType.Bonus)
             {
+                SoundManager.main.PlaySound(GameSoundType.Collect);
                 scoreMultiplier += 1;
             }
 
