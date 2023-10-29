@@ -28,5 +28,6 @@ public class Damageable : MonoBehaviour
             var fx = Instantiate(dieEffect, transform.parent);
             fx.transform.position = transform.position;
         }
+        BulletTime.Main.Trigger();
     }
 }

@@ -31,12 +31,16 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField]
     private SpriteRenderer flashSprite;
 
+    private CharacterAnimator charAnim;
+
     void Start()
     {
         originalColor = flashSprite.color;
         flashColor = new Color(originalColor.r, originalColor.g, originalColor.b, 0.05f);
         previousColor = originalColor;
         targetColor = flashColor;
+        charAnim = GetComponentInChildren<CharacterAnimator>();
+        charAnim.Animate(CharacterAnimation.SPAWN, true);
     }
 
     void Update()
@@ -73,6 +77,11 @@ public class PlayerCharacter : MonoBehaviour
 
     public void Die()
     {
+        charAnim.Animate(CharacterAnimation.DIE, true);
+        Invoke("Destroy", 0.5f);
+    }
+
+    public void Destroy() {
         Destroy(gameObject);
     }
 
