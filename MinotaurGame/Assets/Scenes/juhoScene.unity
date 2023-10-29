@@ -643,6 +643,42 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8636418767245037144, guid: 2b6ae169e9c00874a97d1fb735efa61a, type: 3}
+      propertyPath: levels.Array.size
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8636418767245037144, guid: 2b6ae169e9c00874a97d1fb735efa61a, type: 3}
+      propertyPath: 'levels.Array.data[7]'
+      value: 
+      objectReference: {fileID: 5696150472486053629, guid: 5eebf432afcad5e4eabcc950704807af, type: 3}
+    - target: {fileID: 8636418767245037144, guid: 2b6ae169e9c00874a97d1fb735efa61a, type: 3}
+      propertyPath: 'levels.Array.data[8]'
+      value: 
+      objectReference: {fileID: 5696150472486053629, guid: 791b157066c3da8489ae745f20508aea, type: 3}
+    - target: {fileID: 8636418767245037144, guid: 2b6ae169e9c00874a97d1fb735efa61a, type: 3}
+      propertyPath: 'levels.Array.data[9]'
+      value: 
+      objectReference: {fileID: 5696150472486053629, guid: f5c92efb19ca35b41b349ce272042a9a, type: 3}
+    - target: {fileID: 8636418767245037144, guid: 2b6ae169e9c00874a97d1fb735efa61a, type: 3}
+      propertyPath: 'levels.Array.data[10]'
+      value: 
+      objectReference: {fileID: 5696150472486053629, guid: 40da4d71a8cda4a4baa505edeb7669aa, type: 3}
+    - target: {fileID: 8636418767245037144, guid: 2b6ae169e9c00874a97d1fb735efa61a, type: 3}
+      propertyPath: 'levels.Array.data[11]'
+      value: 
+      objectReference: {fileID: 5696150472486053629, guid: 1d3107cdbe124c448a315e19ef5aa091, type: 3}
+    - target: {fileID: 8636418767245037144, guid: 2b6ae169e9c00874a97d1fb735efa61a, type: 3}
+      propertyPath: 'levels.Array.data[12]'
+      value: 
+      objectReference: {fileID: 5696150472486053629, guid: 0500dbf14125c1741ba371b57bc158bb, type: 3}
+    - target: {fileID: 8636418767245037144, guid: 2b6ae169e9c00874a97d1fb735efa61a, type: 3}
+      propertyPath: 'levels.Array.data[13]'
+      value: 
+      objectReference: {fileID: 5696150472486053629, guid: 0907fcc3ca388554da445fa0632f4048, type: 3}
+    - target: {fileID: 8636418767245037144, guid: 2b6ae169e9c00874a97d1fb735efa61a, type: 3}
+      propertyPath: 'levels.Array.data[14]'
+      value: 
+      objectReference: {fileID: 5696150472486053629, guid: 6440bb306d4016847823d55269228453, type: 3}
     - target: {fileID: 8818249543565202124, guid: 2b6ae169e9c00874a97d1fb735efa61a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
