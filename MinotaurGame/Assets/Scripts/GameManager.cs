@@ -4,6 +4,7 @@ using System.Linq;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Scripting;
 using UnityEngine.Tilemaps;
 
@@ -32,7 +33,8 @@ public class GameManager : MonoBehaviour
     int threadCount = 0;
     private Level currentLevel;
     private int currentLevelThreadCount;
-    int lives = 5;
+    int startingLives = 3;
+    int lives;
     private int currentScore = 0;
     private int scoreMultiplier = 1;
     private int previousLevelsScore = 0;
@@ -49,16 +51,49 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        Init();
+    }
+
+    void Init()
+    {
+        Time.timeScale = 0f;
+        Debug.Log("init clled");
+        Debug.Log("We are HERE!");
+        lives = startingLives;
+        UILifeDisplay.main.Clear();
+        Debug.Log($"Start with {lives}");
+        for (int i = lives; i > 0; i -= 1)
+        {
+            UILifeDisplay.main.AddLife();
+        }
+        OpenLevel();
         UIManager.main.OpenCurtains(delegate
         {
-            OpenLevel();
-            for (int i = lives; i > 0; i -= 1)
+            if (timer != null)
             {
-                UILifeDisplay.main.AddLife();
+                timer = null;
             }
+            Time.timeScale = 1f;
             timer = new Timer();
             UITimer.main.timer = timer;
         });
+    }
+
+    public void ContinueAction()
+    {
+        playerDead = false;
+        if (currentLevel != null)
+        {
+            currentLevel.Kill();
+        }
+        UIScore.main.AddScore(-currentScore);
+        currentScore = 0;
+        Init();
+    }
+    public void RestartAction()
+    {
+        Debug.Log("Restart");
+        SceneManager.LoadScene(0);
     }
 
     public void PlayerDie()
@@ -73,11 +108,26 @@ public class GameManager : MonoBehaviour
         if (lives < 1)
         {
             Debug.Log("Game over");
+            GameOver();
         }
         else
         {
             Invoke("RespawnPlayer", 1.0f);
         }
+    }
+
+    public void GameOver()
+    {
+        timer.Pause();
+        Time.timeScale = 0f;
+        UIManager.main.CloseCurtains(delegate
+        {
+            UIGameOver.main.Show();
+            UIManager.main.OpenCurtains(delegate
+            {
+            });
+        }
+        );
     }
 
     private GameObject playerPrefab;

@@ -5,8 +5,8 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/juhoScene.unity
+    guid: 79f67e67c74b83145b7d78e3c31881dd
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

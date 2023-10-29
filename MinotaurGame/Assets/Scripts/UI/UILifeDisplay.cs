@@ -17,6 +17,16 @@ public class UILifeDisplay : MonoBehaviour
         main = this;
     }
 
+    public void Clear()
+    {
+        for (int index = lifeList.Count - 1; index >= 0; index -= 1)
+        {
+            UILife life = lifeList[index];
+            lifeList.Remove(life);
+            Destroy(life);
+        }
+    }
+
     public void AddLife()
     {
         UILife life = Instantiate(uiLifePrefab, lifeContainer);

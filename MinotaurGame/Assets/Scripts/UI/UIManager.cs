@@ -49,6 +49,7 @@ public class UIManager : MonoBehaviour
     }
     public void OpenAnimationFinished()
     {
+        Debug.Log("curtainOpenCalle");
         afterOpenCallback();
     }
 }
