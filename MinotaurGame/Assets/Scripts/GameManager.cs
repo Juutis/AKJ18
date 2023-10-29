@@ -52,6 +52,10 @@ public class GameManager : MonoBehaviour
         UIManager.main.OpenCurtains(delegate
         {
             OpenLevel();
+            for (int i = lives; i > 0; i -= 1)
+            {
+                UILifeDisplay.main.AddLife();
+            }
             timer = new Timer();
             UITimer.main.timer = timer;
         });
@@ -61,6 +65,7 @@ public class GameManager : MonoBehaviour
     {
         if (playerDead) return;
         playerDead = true;
+        UILifeDisplay.main.RemoveLife();
         PlayerCharacter.main.Die();
         BulletTime.Main.Trigger();
         lives -= 1;
