@@ -53,6 +53,7 @@ MonoBehaviour:
     m_Bits: 1024
   collidingEntity: {fileID: 7399079444857138022}
   pickupItemPrefab: {fileID: 403217605479407131, guid: a2a9b1c2e2406b147be23f27620406eb, type: 3}
+  embeddedPickupablePrefab: {fileID: 2937126079309446535, guid: 96b8752c2c5935d4e993e090b9a22a46, type: 3}
 --- !u!114 &7399079444857138022
 MonoBehaviour:
   m_ObjectHideFlags: 0

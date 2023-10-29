@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
@@ -29,6 +30,11 @@ public class Projectile : MonoBehaviour
 
     private bool floorHasBeenHit = false;
 
+    [SerializeField]
+    private PickupableItem embeddedPickupablePrefab;
+    private PickupableItem embeddedPickupable;
+
+
 
     void Update()
     {
@@ -53,6 +59,11 @@ public class Projectile : MonoBehaviour
         }
     }
 
+    public void PickedUp() {
+        embeddedPickupable = null;
+        Deactivate();
+    }
+
     public void Deactivate()
     {
         transform.position = new(10000, 10000);
@@ -64,6 +75,10 @@ public class Projectile : MonoBehaviour
         collidingEntity.SetGravity(false);
         collidingEntity.Reset();
         currentSpeed = 0;
+        if (embeddedPickupable != null) {
+            Destroy(embeddedPickupable.gameObject);
+            embeddedPickupable = null;
+        }
     }
 
     public void Activate(Vector3 pos, int direction)
@@ -97,6 +112,10 @@ public class Projectile : MonoBehaviour
             SoundManager.main.PlaySound(GameSoundType.AxeHitWall);
         }
         wallHasBeenHit = true;
+        if (embeddedPickupable == null) {
+            embeddedPickupable = Instantiate(embeddedPickupablePrefab, transform);
+            embeddedPickupable.ParentProjectile = this;
+        }
     }
 
     public void HitFloor()
@@ -110,5 +129,9 @@ public class Projectile : MonoBehaviour
         Deactivate();
         // GameManager.main.ScoreKill(comboKillCount);
         comboKillCount = 0;
+        if (embeddedPickupable != null) {
+            Destroy(embeddedPickupable.gameObject);
+            embeddedPickupable = null;
+        }
     }
 }
