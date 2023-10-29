@@ -44,6 +44,8 @@ public class Projectile : MonoBehaviour
                 Debug.Log($"Killed {damageableEntity.name}!");
                 damageableEntity.Kill();
                 comboKillCount++;
+
+                GameManager.main.ScoreKill(comboKillCount);
             }
         }
     }
@@ -93,7 +95,7 @@ public class Projectile : MonoBehaviour
             floorHasBeenHit = true;
         }
         Deactivate();
-        GameManager.main.ScoreKill(comboKillCount);
+        // GameManager.main.ScoreKill(comboKillCount);
         comboKillCount = 0;
     }
 }

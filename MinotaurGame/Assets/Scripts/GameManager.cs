@@ -35,10 +35,13 @@ public class GameManager : MonoBehaviour
     int lives = 5;
     private int currentScore = 0;
     private int scoreMultiplier = 1;
+    private int previousLevelsScore = 0;
     private const int itemScore = 10;
     private const int killScore = 10;
-    private float totalTime = 0f;
-    private float levelTime = 0f;
+    private double timeBeforeCurrentLevel = 0;
+    private double levelTimeMinTarget = 20; // config?
+    private double levelTimeMaxTarget = 40;
+    private double maxLevelTimeBonus = 500;
 
     Timer timer;
 
@@ -61,6 +64,7 @@ public class GameManager : MonoBehaviour
         PlayerCharacter.main.Die();
         BulletTime.Main.Trigger();
         lives -= 1;
+        scoreMultiplier = 1;
         if (lives < 1)
         {
             Debug.Log("Game over");
@@ -121,6 +125,25 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
         timer.Pause();
         currentLevelIndex += 1;
+        scoreMultiplier = 1;
+
+        int levelScore = currentScore - previousLevelsScore;
+        double currentTime = timer.GetTime();
+        double levelTime = currentTime - timeBeforeCurrentLevel;
+        double timeMinTargetInMS = levelTimeMinTarget * 1000;
+        double timeMaxTargetInMS = levelTimeMaxTarget * 1000;
+        int timeBonus = 0;
+        Debug.Log($"Level time is {levelTime} maxTarget is {timeMaxTargetInMS}");
+
+        if (levelTime < timeMaxTargetInMS)
+        {
+            double timeBonusScale = timeMinTargetInMS / Math.Max(levelTime, timeMinTargetInMS);
+            timeBonus = (int)Math.Round(timeBonusScale * maxLevelTimeBonus);
+            currentScore += timeBonus;
+            Debug.Log($"Time bonus is {timeBonus} for scale {timeBonusScale}");
+            UIScore.main.AddScore(timeBonus);
+        }
+
         if (currentLevelIndex >= levels.Count)
         {
             Debug.Log("The end!");
@@ -138,6 +161,9 @@ public class GameManager : MonoBehaviour
                 {
                     timer.Unpause();
                     Time.timeScale = 1f;
+
+                    previousLevelsScore = currentScore;
+                    timeBeforeCurrentLevel = currentTime;
                 });
             }
             );
