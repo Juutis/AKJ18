@@ -76,6 +76,9 @@ MonoBehaviour:
   - Tile: {fileID: 11400000, guid: 5be15db36c2cea14db88a0a0e458332a, type: 2}
     Prefab: {fileID: 5497270287496648657, guid: 54796e59366942e41a19a54f58dc5346, type: 3}
     LevelObjectType: 9
+  - Tile: {fileID: 11400000, guid: 215576eb8c4ce1349a77066207d81b28, type: 2}
+    Prefab: {fileID: 6125457095922364988, guid: ee17f3ace93b9db4eafeefd635c08871, type: 3}
+    LevelObjectType: 10
   levels:
   - {fileID: 5696150472486053629, guid: 435b57288f37bbf458df854da1a99555, type: 3}
   - {fileID: 5696150472486053629, guid: 244746ac09a4a074ca7ac3ca9ff0d00f, type: 3}

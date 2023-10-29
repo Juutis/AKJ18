@@ -93,5 +93,6 @@ public enum LevelObjectType
     Goblet,
     Coin,
     Vase,
-    ShootingEnemy
+    ShootingEnemy,
+    Heart
 }

@@ -279,6 +279,11 @@ public class GameManager : MonoBehaviour
             ammoCount += 1;
             UIAmmoHUD.main.AddAmmo();
         }
+        else if (item.Type == ItemType.Heart)
+        {
+            lives++;
+            UILifeDisplay.main.AddLife();
+        }
         else
         {
             if (item.Type == ItemType.Thread)
