@@ -170,7 +170,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void PickupItem(Item item)
+    public void PickupItem(Item item, Vector3 pickupPosition)
     {
         if (item.Type == ItemType.Axe)
         {
@@ -194,15 +194,17 @@ public class GameManager : MonoBehaviour
 
             int scoreGained = itemScore * scoreMultiplier;
             UIScore.main.AddScore(scoreGained);
+            UIManager.main.ShowPoppingText(pickupPosition, $"+{scoreGained}");
             currentScore += scoreGained;
             Debug.Log($"Score: {currentScore}");
         }
     }
 
-    public void ScoreKill(int count)
+    public void ScoreKill(int count, Vector2 killPosition)
     {
         int scoreGained = itemScore * scoreMultiplier * killComboMultiplier(count);
         UIScore.main.AddScore(scoreGained);
+        UIManager.main.ShowPoppingText(killPosition, $"+{scoreGained}");
         currentScore += scoreGained;
         Debug.Log($"Score: {currentScore}");
     }

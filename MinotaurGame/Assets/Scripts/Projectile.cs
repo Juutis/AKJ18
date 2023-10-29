@@ -45,7 +45,7 @@ public class Projectile : MonoBehaviour
                 damageableEntity.Kill();
                 comboKillCount++;
 
-                GameManager.main.ScoreKill(comboKillCount);
+                GameManager.main.ScoreKill(comboKillCount, hit.point);
             }
         }
     }

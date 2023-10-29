@@ -24,7 +24,8 @@ public class ItemPicker : MonoBehaviour
         Gizmos.DrawSphere(transform.position, radius);
     }*/
 
-    void Start() {
+    void Start()
+    {
         charAnim = GetComponentInChildren<CharacterAnimator>();
     }
 
@@ -40,7 +41,7 @@ public class ItemPicker : MonoBehaviour
             PickupableItem pickupItem = hit.collider.GetComponent<PickupableItem>();
             Item item = pickupItem.Item;
             Debug.Log($"Picked up {item.Name} (Type: {item.Type})!");
-            GameManager.main.PickupItem(item);
+            GameManager.main.PickupItem(item, pickupItem.transform.position);
 
             pickupItem.Kill();
         }
@@ -58,7 +59,8 @@ public class ItemPicker : MonoBehaviour
         }
     }
 
-    public void TriggerNextLevel() {
+    public void TriggerNextLevel()
+    {
         GameManager.main.OpenNextLevel();
     }
 

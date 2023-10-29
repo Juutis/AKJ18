@@ -24,7 +24,7 @@ public class MusicPlayer : MonoBehaviour
 
     private List<AudioFade> fades = new List<AudioFade>();
 
-    private float gameMusicVolume = 0.5f;
+    private float gameMusicVolume = 0;
     private float fadeInDuration = 0.5f;
 
     private AfterFadeCallback afterFadeCallback;
