@@ -57,10 +57,10 @@ public class MusicPlayer : MonoBehaviour
         fades.Add(fade);
     }
 
-    /*public void LevelFadeIn(float invokeTime = 0.5f)
+    public void LevelFadeIn(float invokeTime = 0.5f)
     {
         Invoke("FadeInGameMusic", invokeTime);
-    }*/
+    }
     public void LevelFadeOut()
     {
         FadeOutGameMusic(delegate
@@ -70,7 +70,7 @@ public class MusicPlayer : MonoBehaviour
         }, 0.1f);
     }
 
-    private void FadeOutGameMusic(AfterFadeCallback afterFadeCallback, float duration = 0.5f)
+    public void FadeOutGameMusic(AfterFadeCallback afterFadeCallback, float duration = 0.5f)
     {
         this.afterFadeCallback = afterFadeCallback;
         Fade(gameMusicSource, 0, duration);
