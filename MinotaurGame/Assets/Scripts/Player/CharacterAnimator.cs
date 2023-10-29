@@ -13,7 +13,8 @@ public class CharacterAnimator : MonoBehaviour
         {CharacterAnimation.JUMP, "jump"},
         {CharacterAnimation.FALL, "fall"},
         {CharacterAnimation.DIE, "die"},
-        {CharacterAnimation.SPAWN, "spawn"}
+        {CharacterAnimation.SPAWN, "spawn"},
+        {CharacterAnimation.DESPAWN, "despawn"}
     };
 
     [SerializeField]
@@ -77,5 +78,6 @@ public enum CharacterAnimation {
     JUMP,
     FALL,
     DIE,
-    SPAWN
+    SPAWN,
+    DESPAWN
 }

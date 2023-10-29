@@ -16,11 +16,17 @@ public class ItemPicker : MonoBehaviour
     [SerializeField]
     private LayerMask doorMask;
 
+    private CharacterAnimator charAnim;
+
     /*void OnDrawGizmos()
     {
         Gizmos.color = new Color(0f, 1f, 0f, 0.2f);
         Gizmos.DrawSphere(transform.position, radius);
     }*/
+
+    void Start() {
+        charAnim = GetComponentInChildren<CharacterAnimator>();
+    }
 
     private void Update()
     {
@@ -45,9 +51,15 @@ public class ItemPicker : MonoBehaviour
             if (door != null && door.IsOpen)
             {
                 door.Disable();
-                GameManager.main.OpenNextLevel();
+                charAnim.Animate(CharacterAnimation.DESPAWN, true);
+                BulletTime.Main.Trigger();
+                Invoke("TriggerNextLevel", 0.4f);
             }
         }
+    }
+
+    public void TriggerNextLevel() {
+        GameManager.main.OpenNextLevel();
     }
 
 
