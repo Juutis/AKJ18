@@ -38,7 +38,7 @@ public class PlayerShooting : MonoBehaviour
             }
             if (projectiles.Count < numOfProjectiles)
             {
-                GameObject projectileInstance = Instantiate(projectilePrefab);
+                GameObject projectileInstance = Instantiate(projectilePrefab, transform.parent);
                 Projectile projectile = projectileInstance.GetComponent<Projectile>();
                 projectile.Activate(transform.position, collidingEntity.HorizontalDirection);
                 projectiles.Add(projectile);

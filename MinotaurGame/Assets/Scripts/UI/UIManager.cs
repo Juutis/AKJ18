@@ -18,6 +18,17 @@ public class UIManager : MonoBehaviour
     private AfterAnimationCallback afterCloseCallback;
 
 
+    [SerializeField]
+    private UIPoppingText poppingTextPrefab;
+    [SerializeField]
+    private Transform poppingTextContainer;
+
+    public void ShowPoppingText(Vector3 position, string message)
+    {
+        UIPoppingText poppingText = Instantiate(poppingTextPrefab, poppingTextContainer);
+        poppingText.Show(position, message);
+    }
+
     public void OpenCurtains(AfterAnimationCallback afterAnimation)
     {
         MusicPlayer.main.LevelFadeIn();

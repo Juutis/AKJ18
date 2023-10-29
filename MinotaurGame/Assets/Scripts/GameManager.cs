@@ -52,6 +52,10 @@ public class GameManager : MonoBehaviour
         UIManager.main.OpenCurtains(delegate
         {
             OpenLevel();
+            for (int i = lives; i > 0; i -= 1)
+            {
+                UILifeDisplay.main.AddLife();
+            }
             timer = new Timer();
             UITimer.main.timer = timer;
         });
@@ -61,6 +65,7 @@ public class GameManager : MonoBehaviour
     {
         if (playerDead) return;
         playerDead = true;
+        UILifeDisplay.main.RemoveLife();
         PlayerCharacter.main.Die();
         BulletTime.Main.Trigger();
         lives -= 1;
@@ -170,7 +175,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void PickupItem(Item item)
+    public void PickupItem(Item item, Vector3 pickupPosition)
     {
         if (item.Type == ItemType.Axe)
         {
@@ -194,15 +199,17 @@ public class GameManager : MonoBehaviour
 
             int scoreGained = itemScore * scoreMultiplier;
             UIScore.main.AddScore(scoreGained);
+            UIManager.main.ShowPoppingText(pickupPosition, $"+{scoreGained}");
             currentScore += scoreGained;
             Debug.Log($"Score: {currentScore}");
         }
     }
 
-    public void ScoreKill(int count)
+    public void ScoreKill(int count, Vector2 killPosition)
     {
         int scoreGained = itemScore * scoreMultiplier * killComboMultiplier(count);
         UIScore.main.AddScore(scoreGained);
+        UIManager.main.ShowPoppingText(killPosition, $"+{scoreGained}");
         currentScore += scoreGained;
         Debug.Log($"Score: {currentScore}");
     }
