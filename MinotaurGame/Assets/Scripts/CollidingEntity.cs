@@ -56,6 +56,9 @@ public class CollidingEntity : MonoBehaviour
 
     private CharacterAnimator charAnimator;
 
+    private float coyoteTimer = 0.0f;
+    private float coyoteTime = 0.1f;
+
     public void Init(CollidingEntityConfig config)
     {
         this.config = config;
@@ -94,6 +97,12 @@ public class CollidingEntity : MonoBehaviour
         hasGravity = gravity;
     }
 
+    public void UseCoyoteTime(bool use) {
+        if (!use) {
+            coyoteTime = -1.0f;
+        }
+    }
+
     public void SetCheckFloor(bool check)
     {
         checkFloor = check;
@@ -127,9 +136,10 @@ public class CollidingEntity : MonoBehaviour
 
         CheckOnGroundStatus();
         CheckWallStatus();
-        if (isOnGround && (verticalInput > minVerticalInput))
+        if (isReallyOnGround() && (verticalInput > minVerticalInput))
         {
             verticalSpeed = config.JumpSpeed;
+            coyoteTimer = 0.0f;
         }
 
 
@@ -138,13 +148,13 @@ public class CollidingEntity : MonoBehaviour
             horizontalSpeed = 0f;
         }
 
-        if (hasGravity && !isOnGround)
+        if (hasGravity && !isReallyOnGround())
         {
             acceleration = Time.deltaTime * config.GravityStrength;
             verticalSpeed -= acceleration / 2.0f;
         }
         Vector3 pos = transform.position;
-        float vertSpeed = isOnGround ? Mathf.Clamp(verticalSpeed, 0, verticalSpeed) : verticalSpeed;
+        float vertSpeed = isReallyOnGround() ? Mathf.Clamp(verticalSpeed, 0, verticalSpeed) : verticalSpeed;
         fallSpeed = Mathf.Clamp(vertSpeed, -config.MaxFallSpeed, config.JumpSpeed);
         horizontalMovementPerFrame = horizontalSpeed * Time.deltaTime;
         pos.y += fallSpeed * Time.deltaTime;
@@ -267,6 +277,7 @@ public class CollidingEntity : MonoBehaviour
         Debug.DrawLine(raycastOrigin + Vector3.up * 0.1f, new Vector3(raycastOrigin.x, raycastOrigin.y - rayDistance, raycastOrigin.z), Color.red);
         if (ray.collider != null)
         {
+            coyoteTimer = Time.time + coyoteTime;
             if (!isOnGround)
             {
                 Vector3 pos = transform.position;
@@ -281,5 +292,9 @@ public class CollidingEntity : MonoBehaviour
             //            Debug.Log("We are NOT on ground");
             return false;
         }
+    }
+
+    private bool isReallyOnGround() {
+        return isOnGround || coyoteTimer > Time.time;
     }
 }
