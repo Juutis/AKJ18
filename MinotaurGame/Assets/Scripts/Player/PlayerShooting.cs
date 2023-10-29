@@ -30,7 +30,7 @@ public class PlayerShooting : MonoBehaviour
     {
         if (!canShoot) return;
 
-        if (Input.GetKeyDown(KeyCode.X) || Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1"))
         {
             if (!GameManager.main.SpendProjectile())
             {

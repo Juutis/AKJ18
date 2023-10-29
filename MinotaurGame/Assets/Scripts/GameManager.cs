@@ -118,6 +118,7 @@ public class GameManager : MonoBehaviour
         }
         UIScore.main.AddScore(-currentScore);
         currentScore = 0;
+        previousLevelsScore = 0;
         Init(false);
     }
     public void RestartAction()
