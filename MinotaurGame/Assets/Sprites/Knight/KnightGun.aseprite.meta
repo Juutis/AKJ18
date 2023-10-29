@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b38b6b3a84688fb41b47292b30d323ff
+guid: b5cdfb5ecb268304494201fa1480dda3
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -119,18 +119,18 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: Effects
+  - name: KnightGun_Frame_0
     originalName: 
-    pivot: {x: 0.8055556, y: -14.375}
+    pivot: {x: 0.44444445, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 72
-      height: 8
-    spriteID: cf5db2eaa6498064883b9ec638d7ff29
+      width: 9
+      height: 14
+    spriteID: d137673f74e369243a6c2bb4a161f7ea
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -139,26 +139,110 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 4, y: 4}
+  - name: KnightGun_Frame_1
+    originalName: 
+    pivot: {x: 0.5, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 21
+      y: 4
+      width: 8
+      height: 14
+    spriteID: 1a027a14b70b842478d6ef36e2873a9f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 21, y: 4}
+  - name: KnightGun_Frame_2
+    originalName: 
+    pivot: {x: 0.5, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 21
+      y: 26
+      width: 8
+      height: 14
+    spriteID: 3b330b28f3d37244f9af549483907a94
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 21, y: 26}
+  - name: KnightGun_Frame_3
+    originalName: 
+    pivot: {x: 0.44444445, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 26
+      width: 9
+      height: 13
+    spriteID: 88fa53d89c59f8246bc412c0315aa092
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 26}
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: -1172386576
-    name: Effects
+    guid: 1143477691
+    name: KnightGun
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: Effects
+    - name: KnightGun_Frame_0
       frameIndex: 0
       cellRect:
-        x: 6
-        y: 115
-        width: 72
-        height: 8
-      spriteId: cf5db2eaa6498064883b9ec638d7ff29
+        x: 4
+        y: 0
+        width: 9
+        height: 14
+      spriteId: d137673f74e369243a6c2bb4a161f7ea
+    - name: KnightGun_Frame_1
+      frameIndex: 1
+      cellRect:
+        x: 4
+        y: 0
+        width: 8
+        height: 14
+      spriteId: 1a027a14b70b842478d6ef36e2873a9f
+    - name: KnightGun_Frame_2
+      frameIndex: 2
+      cellRect:
+        x: 4
+        y: 0
+        width: 8
+        height: 14
+      spriteId: 3b330b28f3d37244f9af549483907a94
+    - name: KnightGun_Frame_3
+      frameIndex: 3
+      cellRect:
+        x: 4
+        y: 0
+        width: 9
+        height: 13
+      spriteId: 88fa53d89c59f8246bc412c0315aa092
     linkedCells: []
     parentIndex: -1
   platformSettings: []
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 128, y: 128}
+  canvasSize: {x: 16, y: 16}

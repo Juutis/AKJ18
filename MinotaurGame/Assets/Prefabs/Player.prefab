@@ -351,6 +351,9 @@ MonoBehaviour:
   enemyTargetMask:
     serializedVersion: 2
     m_Bits: 1024
+  enemyProjectileTargetMask:
+    serializedVersion: 2
+    m_Bits: 2048
   flashSprite: {fileID: 498538768270981932}
 --- !u!114 &7583799678980838421
 MonoBehaviour:

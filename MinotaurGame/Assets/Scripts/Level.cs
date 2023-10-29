@@ -60,6 +60,9 @@ public class Level : MonoBehaviour
                         case LevelObjectType.FlyingEnemy:
                             Debug.Log("Spawned A FUCKING BAT!");
                             break;
+                        case LevelObjectType.ShootingEnemy:
+                            Debug.Log("Spawned a shooting enemy!");
+                            break;
                     }
                 }
             }
@@ -89,5 +92,6 @@ public enum LevelObjectType
     FlyingEnemy,
     Goblet,
     Coin,
-    Vase
+    Vase,
+    ShootingEnemy
 }

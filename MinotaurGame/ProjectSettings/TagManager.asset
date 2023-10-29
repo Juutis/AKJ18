@@ -16,7 +16,7 @@ TagManager:
   - PickupItem
   - Door
   - Enemy
-  - 
+  - EnemyProjectile
   - 
   - 
   - 
