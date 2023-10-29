@@ -20,11 +20,13 @@ public class UIManager : MonoBehaviour
 
     public void OpenCurtains(AfterAnimationCallback afterAnimation)
     {
+        MusicPlayer.main.LevelFadeIn();
         afterOpenCallback = afterAnimation;
         animator.SetTrigger("Open");
     }
     public void CloseCurtains(AfterAnimationCallback afterAnimation)
     {
+        MusicPlayer.main.LevelFadeOut();
         afterCloseCallback = afterAnimation;
         animator.SetTrigger("Close");
     }
