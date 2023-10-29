@@ -44,6 +44,7 @@ public class PlayerCharacter : MonoBehaviour
         targetColor = flashColor;
         charAnim = GetComponentInChildren<CharacterAnimator>();
         charAnim.Animate(CharacterAnimation.SPAWN, true);
+        GetComponent<ItemPicker>().enabled = true;
     }
 
     void Update()
@@ -90,6 +91,7 @@ public class PlayerCharacter : MonoBehaviour
         SoundManager.main.PlaySound(GameSoundType.HeroDie);
         charAnim.Animate(CharacterAnimation.DIE, true);
         Invoke("Destroy", 0.5f);
+        GetComponent<ItemPicker>().enabled = false;
     }
 
     public void Destroy()

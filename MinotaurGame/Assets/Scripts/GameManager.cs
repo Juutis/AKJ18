@@ -303,6 +303,11 @@ public class GameManager : MonoBehaviour
             UIAmmoHUD.main.AddAmmo();
             SoundManager.main.PlaySound(GameSoundType.CollectAxe);
         }
+        else if (item.Type == ItemType.Heart)
+        {
+            lives++;
+            UILifeDisplay.main.AddLife();
+        }
         else
         {
             if (item.Type == ItemType.Thread)
