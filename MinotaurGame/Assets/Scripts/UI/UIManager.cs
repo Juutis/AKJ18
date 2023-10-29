@@ -17,6 +17,11 @@ public class UIManager : MonoBehaviour
     private AfterAnimationCallback afterOpenCallback;
     private AfterAnimationCallback afterCloseCallback;
 
+    [SerializeField]
+    private GameObject startGameScreen;
+    [SerializeField]
+    private GameObject endGameScreen;
+
 
     [SerializeField]
     private UIPoppingText poppingTextPrefab;
@@ -25,6 +30,16 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private UILevelScoreDisplay scoreDisplay;
+
+    public void HideStart()
+    {
+        startGameScreen.SetActive(false);
+    }
+
+    public void ShowEnd()
+    {
+        endGameScreen.SetActive(true);
+    }
 
     public void ShowLevelScore(int levelIndex, LevelScore levelScore)
     {
@@ -37,13 +52,17 @@ public class UIManager : MonoBehaviour
         poppingText.Show(position, message);
     }
 
-    public void OpenCurtains(AfterAnimationCallback afterAnimation)
+    public void OpenCurtains(AfterAnimationCallback afterAnimation, bool hideScore = true)
     {
         SoundManager.main.PlaySound(GameSoundType.CurtainsOpen);
-        scoreDisplay.Hide();
+        if (hideScore)
+        {
+            scoreDisplay.Hide();
+        }
         //MusicPlayer.main.LevelFadeIn();
         afterOpenCallback = afterAnimation;
         animator.SetTrigger("Open");
+        HideStart();
     }
     public void CloseCurtains(AfterAnimationCallback afterAnimation)
     {

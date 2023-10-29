@@ -258,6 +258,29 @@ public class GameManager : MonoBehaviour
         if (currentLevelIndex >= levels.Count)
         {
             Debug.Log("The end!");
+            UIManager.main.CloseCurtains(delegate
+            {
+                currentLevel.Kill();
+                UIManager.main.ShowLevelScore(currentLevelIndex - 1, new LevelScore
+                {
+                    LevelTime = Timer.GetFormattedString(levelTime),
+                    TotalTime = Timer.GetFormattedString(currentTime),
+                    ScoreGained = levelScore,
+                    BonusFromTime = timeBonus,
+                    Deaths = deathsThisLevel,
+                    TotalDeaths = totalDeaths,
+                    TotalScore = currentScore
+                });
+                waitForInput = true;
+                afterWaitForInput = delegate
+                {
+                    UIManager.main.OpenCurtains(delegate
+                    {
+                        UIManager.main.ShowEnd();
+                    }, false);
+                };
+
+            });
         }
         else
         {
@@ -316,7 +339,11 @@ public class GameManager : MonoBehaviour
                 SoundManager.main.PlaySound(GameSoundType.Collect);
                 if (threadCount >= currentLevelThreadCount)
                 {
-                    SoundManager.main.PlaySound(GameSoundType.OpenDoor);
+                    MusicPlayer.main.FadeOutGameMusic(delegate
+                    {
+                        SoundManager.main.PlaySound(GameSoundType.OpenDoor);
+                        MusicPlayer.main.LevelFadeIn(3f);
+                    }, 0.2f);
                     OpenDoor();
                 }
             }

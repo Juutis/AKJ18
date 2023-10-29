@@ -32,7 +32,9 @@ public class Projectile : MonoBehaviour
 
     void Update()
     {
-        collidingEntity.SetHorizontalInput(currentSpeed * dir);
+        if (!wallHasBeenHit) {
+            collidingEntity.SetHorizontalInput(currentSpeed * dir);
+        }
 
         if (damage > 0)
         {
@@ -89,6 +91,7 @@ public class Projectile : MonoBehaviour
     {
         collidingEntity.SetGravity(true);
         collidingEntity.SetCheckFloor(true);
+        collidingEntity.SetHorizontalInput(0);
         if (!wallHasBeenHit)
         {
             SoundManager.main.PlaySound(GameSoundType.AxeHitWall);
