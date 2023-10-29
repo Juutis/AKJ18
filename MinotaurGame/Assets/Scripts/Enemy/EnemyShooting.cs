@@ -20,7 +20,7 @@ public class EnemyShooting : MonoBehaviour
     void Start()
     {
         collidingEntity = GetComponent<CollidingEntity>();
-        // lastShot = Random.Range(0, shootCD);
+        lastShot = shootCD;
     }
 
     // Update is called once per frame
