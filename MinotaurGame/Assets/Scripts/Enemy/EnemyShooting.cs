@@ -13,7 +13,7 @@ public class EnemyShooting : MonoBehaviour
     private int numOfProjectiles = 4;
     private List<EnemyProjectile> projectiles = new List<EnemyProjectile>();
     private float lastShot = 0f;
-    private float shootCD = 2f;
+    private float shootCD = 1.5f;
 
 
     // Start is called before the first frame update
