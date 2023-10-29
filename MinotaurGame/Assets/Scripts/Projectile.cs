@@ -45,6 +45,7 @@ public class Projectile : MonoBehaviour
                 damageableEntity.Kill();
                 comboKillCount++;
 
+                SoundManager.main.PlaySound(GameSoundType.AxeHitEnemy);
                 GameManager.main.ScoreKill(comboKillCount, hit.point);
             }
         }
@@ -55,6 +56,7 @@ public class Projectile : MonoBehaviour
         transform.position = new(10000, 10000);
         currentSpeed = 0f;
         IsActive = false;
+        wallHasBeenHit = false;
         startLifetime = 0f;
         collidingEntity.SetHorizontalInput(0);
         collidingEntity.SetGravity(false);
@@ -64,6 +66,7 @@ public class Projectile : MonoBehaviour
 
     public void Activate(Vector3 pos, int direction)
     {
+        SoundManager.main.PlaySound(GameSoundType.AxeThrow);
         floorHasBeenHit = false;
         collidingEntity.Init();
         currentSpeed = projectileSpeed;
@@ -80,10 +83,17 @@ public class Projectile : MonoBehaviour
         comboKillCount = 0;
     }
 
+    private bool wallHasBeenHit = false;
+
     public void HitWall()
     {
         collidingEntity.SetGravity(true);
         collidingEntity.SetCheckFloor(true);
+        if (!wallHasBeenHit)
+        {
+            SoundManager.main.PlaySound(GameSoundType.AxeHitWall);
+        }
+        wallHasBeenHit = true;
     }
 
     public void HitFloor()

@@ -87,11 +87,13 @@ public class PlayerCharacter : MonoBehaviour
 
     public void Die()
     {
+        SoundManager.main.PlaySound(GameSoundType.HeroDie);
         charAnim.Animate(CharacterAnimation.DIE, true);
         Invoke("Destroy", 0.5f);
     }
 
-    public void Destroy() {
+    public void Destroy()
+    {
         Destroy(gameObject);
     }
 
