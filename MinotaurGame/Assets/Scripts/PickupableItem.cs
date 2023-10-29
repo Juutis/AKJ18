@@ -10,8 +10,13 @@ public class PickupableItem : MonoBehaviour
     [SerializeField]
     private CircleCollider2D circleCollider2D;
 
+    public Projectile ParentProjectile;
+
     public void Kill()
     {
+        if (ParentProjectile != null) {
+            ParentProjectile.PickedUp();
+        }
         Destroy(gameObject);
     }
 
