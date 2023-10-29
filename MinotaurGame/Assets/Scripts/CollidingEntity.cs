@@ -57,7 +57,7 @@ public class CollidingEntity : MonoBehaviour
     private CharacterAnimator charAnimator;
 
     private float coyoteTimer = 0.0f;
-    private float coyoteTime = 0.1f;
+    private float coyoteTime = 0.075f;
 
     public void Init(CollidingEntityConfig config)
     {
@@ -174,7 +174,7 @@ public class CollidingEntity : MonoBehaviour
             {
                 charAnimator.Animate(CharacterAnimation.JUMP);
             }
-            else if (verticalSpeed < -0.00f && !isOnGround)
+            else if (verticalSpeed < -0.00f && !isReallyOnGround())
             {
                 charAnimator.Animate(CharacterAnimation.FALL);
             }
