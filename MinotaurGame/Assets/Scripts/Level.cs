@@ -63,6 +63,9 @@ public class Level : MonoBehaviour
                         case LevelObjectType.ShootingEnemy:
                             Debug.Log("Spawned a shooting enemy!");
                             break;
+                        case LevelObjectType.JumpingEnemy:
+                            Debug.Log("Spawned a jumping enemy!");
+                            break;
                     }
                 }
             }
@@ -94,5 +97,6 @@ public enum LevelObjectType
     Coin,
     Vase,
     ShootingEnemy,
-    Heart
+    Heart,
+    JumpingEnemy
 }
