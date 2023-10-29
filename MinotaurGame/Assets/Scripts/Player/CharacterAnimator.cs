@@ -11,11 +11,15 @@ public class CharacterAnimator : MonoBehaviour
         {CharacterAnimation.IDLE, "idle"},
         {CharacterAnimation.WALK, "walk"},
         {CharacterAnimation.JUMP, "jump"},
-        {CharacterAnimation.FALL, "fall"}
+        {CharacterAnimation.FALL, "fall"},
+        {CharacterAnimation.DIE, "die"},
+        {CharacterAnimation.SPAWN, "spawn"}
     };
 
     [SerializeField]
     private ParticleSystem jumpEffect;
+
+    private bool canPlayAnimation = true;
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +42,13 @@ public class CharacterAnimator : MonoBehaviour
         
     }
 
-    public void Animate(CharacterAnimation animation) {
+    public void Animate(CharacterAnimation animation, bool blockUntilDone = false) {
+        if (!canPlayAnimation) return;
+
+        if (anim == null) {
+            anim = GetComponent<Animator>();
+        }
+
         if (animation != currentAnimation) {
             if (jumpEffect != null) {
                 if (currentAnimation == CharacterAnimation.FALL) {
@@ -51,6 +61,13 @@ public class CharacterAnimator : MonoBehaviour
             currentAnimation = animation;
             anim.Play(animToState[animation]);
         }
+        if (blockUntilDone) {
+            canPlayAnimation = false;
+        }
+    }
+
+    public void AnimationFinished() {
+        canPlayAnimation = true;
     }
 }
 
@@ -58,5 +75,7 @@ public enum CharacterAnimation {
     IDLE,
     WALK,
     JUMP,
-    FALL
+    FALL,
+    DIE,
+    SPAWN
 }

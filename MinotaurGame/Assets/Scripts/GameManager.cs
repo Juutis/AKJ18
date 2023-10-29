@@ -45,6 +45,8 @@ public class GameManager : MonoBehaviour
 
     Timer timer;
 
+    private bool playerDead = false;
+
     void Start()
     {
         UIManager.main.OpenCurtains(delegate
@@ -57,7 +59,10 @@ public class GameManager : MonoBehaviour
 
     public void PlayerDie()
     {
+        if (playerDead) return;
+        playerDead = true;
         PlayerCharacter.main.Die();
+        BulletTime.Main.Trigger();
         lives -= 1;
         scoreMultiplier = 1;
         if (lives < 1)
@@ -66,7 +71,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            RespawnPlayer();
+            Invoke("RespawnPlayer", 1.0f);
         }
     }
 
@@ -83,6 +88,7 @@ public class GameManager : MonoBehaviour
     public void RespawnPlayer()
     {
         Instantiate(playerPrefab, playerPosition, Quaternion.identity, playerParent);
+        playerDead = false;
     }
 
     public void OpenLevel()

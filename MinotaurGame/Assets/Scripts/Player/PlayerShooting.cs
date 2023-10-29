@@ -12,16 +12,23 @@ public class PlayerShooting : MonoBehaviour
 
     private int numOfProjectiles = 20;
     private List<Projectile> projectiles = new List<Projectile>();
+    private bool canShoot = false;
 
     // Start is called before the first frame update
     void Start()
     {
         collidingEntity = GetComponent<CollidingEntity>();
+        Invoke("EnableInput", 0.75f);
+    }
+
+    public void EnableInput() {
+        canShoot = true;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!canShoot) return;
 
         if (Input.GetKeyDown(KeyCode.X) || Input.GetButtonDown("Fire1"))
         {

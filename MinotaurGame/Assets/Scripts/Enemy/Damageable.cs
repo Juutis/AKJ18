@@ -25,8 +25,9 @@ public class Damageable : MonoBehaviour
         Destroy(gameObject);
         if (dieEffect != null)
         {
-            var fx = Instantiate(dieEffect);
+            var fx = Instantiate(dieEffect, transform.parent);
             fx.transform.position = transform.position;
         }
+        BulletTime.Main.Trigger();
     }
 }

@@ -13,6 +13,7 @@ public class MovingEnemy : MonoBehaviour
     private void Start()
     {
         collidingEntity.Init();
+        collidingEntity.UseCoyoteTime(false);
     }
 
     // Update is called once per frame
