@@ -221,6 +221,7 @@ public class GameManager : MonoBehaviour
             currentLevel.Kill();
         }
         ShowLevelSelector();
+        ResumeTime();
     }
 
     public void PlayerDie()
