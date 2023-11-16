@@ -16,6 +16,7 @@ public class Door : MonoBehaviour
     {
         if (!isAnimating)
         {
+            isOpen = true;
             isAnimating = true;
             animator.Play("doorOpen");
         }

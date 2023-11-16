@@ -23,7 +23,7 @@ public class UILifeDisplay : MonoBehaviour
         {
             UILife life = lifeList[index];
             lifeList.Remove(life);
-            Destroy(life);
+            Destroy(life.gameObject);
         }
     }
 

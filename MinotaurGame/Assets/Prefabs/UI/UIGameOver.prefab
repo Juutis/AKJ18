@@ -719,9 +719,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIButton
       objectReference: {fileID: 0}
+    - target: {fileID: 597961078746192015, guid: 6d12bbe92773ae64aa2ca934dbd9cd96, type: 3}
+      propertyPath: m_text
+      value: '- Go back to level select -'
+      objectReference: {fileID: 0}
     - target: {fileID: 2793907590435680953, guid: 6d12bbe92773ae64aa2ca934dbd9cd96, type: 3}
       propertyPath: action
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3804623003715681089, guid: 6d12bbe92773ae64aa2ca934dbd9cd96, type: 3}
+      propertyPath: m_text
+      value: GIVE UP
       objectReference: {fileID: 0}
     - target: {fileID: 6812624622208027288, guid: 6d12bbe92773ae64aa2ca934dbd9cd96, type: 3}
       propertyPath: m_Pivot.x
@@ -838,11 +846,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 597961078746192015, guid: 6d12bbe92773ae64aa2ca934dbd9cd96, type: 3}
       propertyPath: m_text
-      value: '- Continue but with 0 score -'
+      value: '- Restart the level -'
       objectReference: {fileID: 0}
     - target: {fileID: 3804623003715681089, guid: 6d12bbe92773ae64aa2ca934dbd9cd96, type: 3}
       propertyPath: m_text
-      value: CONTINUE
+      value: TRY AGAIN
       objectReference: {fileID: 0}
     - target: {fileID: 6812624622208027288, guid: 6d12bbe92773ae64aa2ca934dbd9cd96, type: 3}
       propertyPath: m_Pivot.x

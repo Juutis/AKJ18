@@ -44,6 +44,7 @@ public class UIGameOver : MonoBehaviour
         selectedIndex = 0;
         container.SetActive(false);
         isShown = false;
+        selectionMade = false;
     }
 
 
@@ -74,6 +75,8 @@ public class UIGameOver : MonoBehaviour
         }
     }
 
+    private bool selectionMade = false;
+
     void Update()
     {
         if (isShown)
@@ -87,8 +90,9 @@ public class UIGameOver : MonoBehaviour
             {
                 SelectNextButton();
             }
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetButtonDown("Fire1") && !selectionMade)
             {
+                selectionMade = true;
                 UIManager.main.CloseCurtains(delegate
                 {
                     uIButtons[selectedIndex].PerformAction();

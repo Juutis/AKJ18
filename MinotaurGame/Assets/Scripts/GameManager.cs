@@ -56,6 +56,16 @@ public class GameManager : MonoBehaviour
     private int deathsThisLevel = 0;
     private int totalDeaths = 0;
 
+    [SerializeField]
+    private GameObject LevelSelector;
+
+    private bool levelScoreActive;
+
+    public int LastLevelIndex = 0;
+    public int NextLevelIndex = 0;
+    private bool endIsHere = false;
+    private bool canRestart = false;
+
     void Start()
     {
         Init();
@@ -63,8 +73,20 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if (endIsHere) 
+        {
+            canRestart = false;
+            UIManager.main.HideLevelScore();
+            if (Input.anyKeyDown)
+            {
+                UIManager.main.HideEnd();
+                ShowLevelSelector();
+                endIsHere = false;
+            }
+        }
         if (waitForInput)
         {
+            canRestart = false;
             if (Input.anyKey)
             {
                 waitForInput = false;
@@ -75,6 +97,68 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+        if (levelScoreActive)
+        {
+            canRestart = false;
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                ShowLevelSelector();
+                levelScoreActive = false;
+                UIManager.main.HideLevelScore();
+                ResumeTime();
+            }
+            else if (Input.GetKeyDown(KeyCode.R))
+            {
+                levelScoreActive = false;
+                UIManager.main.HideLevelScore();
+                currentLevelIndex--;
+                if (afterWaitForInput != null)
+                {
+                    afterWaitForInput();
+                    afterWaitForInput = null;
+                }
+                ResetLives();
+            }
+            else if (Input.anyKeyDown)
+            {
+                if (afterWaitForInput != null)
+                {
+                    afterWaitForInput();
+                    afterWaitForInput = null;
+                }
+                levelScoreActive = false;
+            }
+        }
+        if (canRestart) {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                CancelInvoke();
+                canRestart = false;
+                FreezeTime();
+                UIManager.main.CloseCurtains(delegate
+                {
+                    ResumeTime();
+                    timer = new Timer();
+                    UITimer.main.timer = timer;
+                    timer.Pause();
+                    if (currentLevel != null)
+                    {
+                        currentLevel.Kill();
+                    }
+                    
+                    LoadLevel(currentLevelIndex);
+                });
+            }
+        }
+    }
+
+    private void ShowLevelSelector() {
+        if (AllLevelsDone()) {
+            UIManager.main.SetTotalTime(GetTotalTime());
+        } else {
+            UIManager.main.UnsetTotalTime();
+        }
+        LevelSelector.SetActive(true);
     }
 
     void Init(bool resetTimer = true)
@@ -82,31 +166,39 @@ public class GameManager : MonoBehaviour
         waitForInput = true;
         afterWaitForInput = delegate
         {
-            FreezeTime();
-            Debug.Log("init clled");
-            Debug.Log("We are HERE!");
-            lives = startingLives;
-            UILifeDisplay.main.Clear();
-            Debug.Log($"Start with {lives}");
-            for (int i = lives; i > 0; i -= 1)
-            {
-                UILifeDisplay.main.AddLife();
-            }
-            OpenLevel();
-            UIManager.main.OpenCurtains(delegate
-            {
-                ResumeTime();
-                if (timer != null && !resetTimer)
-                {
-                    timer.Unpause();
-                }
-                else
-                {
-                    timer = new Timer();
-                }
-                UITimer.main.timer = timer;
-            });
+            ShowLevelSelector();
+            UIManager.main.HideStart();
         };
+    }
+
+    public void LoadLevel(int levelIndex) {
+        currentLevelIndex = levelIndex;
+        LevelSelector.SetActive(false);
+        FreezeTime();
+        Debug.Log("init clled");
+        Debug.Log("We are HERE!");
+        ResetLives();
+        OpenLevel();
+        UIManager.main.OpenCurtains(delegate
+        {
+            ResumeTime();
+            timer = new Timer();
+            UITimer.main.timer = timer;
+            canRestart = true;
+        });
+        playerDead = false;
+        CancelInvoke();
+    }
+
+    private void ResetLives()
+    {
+        Debug.Log($"Start with {lives}");
+        lives = startingLives;
+        UILifeDisplay.main.Clear();
+        for (int i = lives; i > 0; i -= 1)
+        {
+            UILifeDisplay.main.AddLife();
+        }
     }
 
     public void ContinueAction()
@@ -116,15 +208,16 @@ public class GameManager : MonoBehaviour
         {
             currentLevel.Kill();
         }
-        UIScore.main.AddScore(-currentScore);
-        currentScore = 0;
-        previousLevelsScore = 0;
-        Init(false);
+        LoadLevel(currentLevelIndex);
     }
     public void RestartAction()
     {
-        Debug.Log("Restart");
-        SceneManager.LoadScene(0);
+        playerDead = false;
+        if (currentLevel != null)
+        {
+            currentLevel.Kill();
+        }
+        ShowLevelSelector();
     }
 
     public void PlayerDie()
@@ -151,14 +244,12 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        canRestart = false;
         timer.Pause();
         FreezeTime();
         UIManager.main.CloseCurtains(delegate
         {
             UIGameOver.main.Show();
-            UIManager.main.OpenCurtains(delegate
-            {
-            });
         }
         );
     }
@@ -224,6 +315,11 @@ public class GameManager : MonoBehaviour
         Debug.Log("FREEZE time");
     }
 
+    public void StopTimer() {
+        canRestart = false;
+        timer.Pause();
+    }
+
     public void SetTimescale(float timeScale)
     {
         if (!isPaused)
@@ -234,18 +330,29 @@ public class GameManager : MonoBehaviour
 
     public void OpenNextLevel()
     {
+        canRestart = false;
+        LastLevelIndex = currentLevelIndex;
         FreezeTime();
         timer.Pause();
         currentLevelIndex += 1;
         scoreMultiplier = 1;
+        NextLevelIndex = currentLevelIndex;
 
         int levelScore = currentScore - previousLevelsScore;
-        double currentTime = timer.GetTime();
-        double levelTime = currentTime - timeBeforeCurrentLevel;
+        double levelTime = timer.GetTime();
         double timeMinTargetInMS = levelTimeMinTarget * 1000;
         double timeMaxTargetInMS = levelTimeMaxTarget * 1000;
         int timeBonus = 0;
         Debug.Log($"Level time is {levelTime} maxTarget is {timeMaxTargetInMS}");
+
+        if (PlayerPrefs.HasKey(LastLevelIndex.ToString())) {
+            var levelBestTime = PlayerPrefs.GetInt(LastLevelIndex.ToString());
+            if (levelTime < levelBestTime) {
+                PlayerPrefs.SetInt(LastLevelIndex.ToString(), (int)levelTime);
+            }
+        } else {
+            PlayerPrefs.SetInt(LastLevelIndex.ToString(), (int)levelTime);
+        }
 
         if (levelTime < timeMaxTargetInMS)
         {
@@ -258,6 +365,7 @@ public class GameManager : MonoBehaviour
 
         if (currentLevelIndex >= levels.Count)
         {
+            NextLevelIndex = levels.Count - 1;
             Debug.Log("The end!");
             UIManager.main.CloseCurtains(delegate
             {
@@ -265,20 +373,18 @@ public class GameManager : MonoBehaviour
                 UIManager.main.ShowLevelScore(currentLevelIndex - 1, new LevelScore
                 {
                     LevelTime = Timer.GetFormattedString(levelTime),
-                    TotalTime = Timer.GetFormattedString(currentTime),
+                    TotalTime = Timer.GetFormattedString(levelTime),
                     ScoreGained = levelScore,
                     BonusFromTime = timeBonus,
                     Deaths = deathsThisLevel,
                     TotalDeaths = totalDeaths,
                     TotalScore = currentScore
                 });
-                waitForInput = true;
+                levelScoreActive = true;
                 afterWaitForInput = delegate
                 {
-                    UIManager.main.OpenCurtains(delegate
-                    {
-                        UIManager.main.ShowEnd();
-                    }, false);
+                    UIManager.main.ShowEnd();
+                    endIsHere = true;
                 };
 
             });
@@ -287,6 +393,9 @@ public class GameManager : MonoBehaviour
         {
             UIManager.main.CloseCurtains(delegate
             {
+                timer = new Timer();
+                UITimer.main.timer = timer;
+                timer.Pause();
                 if (currentLevel != null)
                 {
                     currentLevel.Kill();
@@ -294,25 +403,17 @@ public class GameManager : MonoBehaviour
                 UIManager.main.ShowLevelScore(currentLevelIndex - 1, new LevelScore
                 {
                     LevelTime = Timer.GetFormattedString(levelTime),
-                    TotalTime = Timer.GetFormattedString(currentTime),
+                    TotalTime = Timer.GetFormattedString(levelTime),
                     ScoreGained = levelScore,
                     BonusFromTime = timeBonus,
                     Deaths = deathsThisLevel,
                     TotalDeaths = totalDeaths,
                     TotalScore = currentScore
                 });
-                OpenLevel();
-                waitForInput = true;
+                levelScoreActive = true;
                 afterWaitForInput = delegate
                 {
-                    UIManager.main.OpenCurtains(delegate
-                    {
-                        timer.Unpause();
-                        ResumeTime();
-
-                        previousLevelsScore = currentScore;
-                        timeBeforeCurrentLevel = currentTime;
-                    });
+                    LoadLevel(currentLevelIndex);
                 };
             }
             );
@@ -374,6 +475,26 @@ public class GameManager : MonoBehaviour
     private int killComboMultiplier(int count)
     {
         return (int)Mathf.Pow(2, count - 1);
+    }
+
+    public bool AllLevelsDone() {
+        for (var i = 0; i < levels.Count(); i++) {
+            if (!PlayerPrefs.HasKey(i.ToString())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public TimeSpan GetTotalTime() {
+        int total = 0;
+        for (var i = 0; i < levels.Count(); i++) {
+            var levelTime = PlayerPrefs.GetInt(i.ToString());
+            Debug.Log("Level " + i + " = " + levelTime);
+            total += levelTime;
+        }
+        Debug.Log("Total time = " + total);
+        return TimeSpan.FromMilliseconds(total);
     }
 
 }

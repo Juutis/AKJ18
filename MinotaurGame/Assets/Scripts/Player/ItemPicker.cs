@@ -54,6 +54,7 @@ public class ItemPicker : MonoBehaviour
                 door.Disable();
                 charAnim.Animate(CharacterAnimation.DESPAWN, true);
                 BulletTime.Main.Trigger();
+                GameManager.main.StopTimer();
                 Invoke("TriggerNextLevel", 0.4f);
             }
         }

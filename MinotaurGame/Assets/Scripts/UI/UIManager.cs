@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
+using System;
+using Unity.Mathematics;
 
 public class UIManager : MonoBehaviour
 {
@@ -41,9 +44,18 @@ public class UIManager : MonoBehaviour
         endGameScreen.SetActive(true);
     }
 
+    public void HideEnd()
+    {
+        endGameScreen.SetActive(false);
+    }
+
     public void ShowLevelScore(int levelIndex, LevelScore levelScore)
     {
         scoreDisplay.Show(levelIndex, levelScore);
+    }
+
+    public void HideLevelScore() {
+        scoreDisplay.Hide();
     }
 
     public void ShowPoppingText(Vector3 position, string message)
@@ -82,9 +94,39 @@ public class UIManager : MonoBehaviour
         Debug.Log("curtainOpenCalle");
         afterOpenCallback();
     }
+
+    
+    private LevelSelectorLevel hoveredLevel;
+
+    [SerializeField] 
+    private TMP_Text levelName;
+
+    [SerializeField] 
+    private TMP_Text levelBestTime;
+    
+    [SerializeField] 
+    private TMP_Text totalTime;
+
+
+    public void HoverLevel(LevelSelectorLevel level) {
+        if (hoveredLevel != null) {
+            hoveredLevel.Deselect();
+        }
+        hoveredLevel = level;
+        levelName.text = level.LevelInfo.LevelName;
+        levelBestTime.text = level.LevelInfo.BestTime.ToString(@"mm\:ss\.ff");
+    }
+
+    public void SetTotalTime(TimeSpan time) {
+        totalTime.text = time.ToString(@"mm\:ss\.ff");
+
+    }
+    public void UnsetTotalTime() {
+        totalTime.text = "-";
+    }
 }
 
-[System.Serializable]
+[Serializable]
 public class LevelScore
 {
     public int ScoreGained;
@@ -94,6 +136,14 @@ public class LevelScore
     public int Deaths;
     public int TotalDeaths;
     public int TotalScore;
+}
+
+
+
+[Serializable]
+public class LevelInfo {
+    public string LevelName;
+    public TimeSpan BestTime;
 }
 
 public delegate void AfterAnimationCallback();
