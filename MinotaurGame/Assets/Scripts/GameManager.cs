@@ -65,6 +65,7 @@ public class GameManager : MonoBehaviour
     public int NextLevelIndex = 0;
     private bool endIsHere = false;
     private bool canRestart = false;
+    private bool levelFinished = false;
 
     void Start()
     {
@@ -82,6 +83,7 @@ public class GameManager : MonoBehaviour
                 UIManager.main.HideEnd();
                 ShowLevelSelector();
                 endIsHere = false;
+                ResumeTime();
             }
         }
         if (waitForInput)
@@ -187,6 +189,7 @@ public class GameManager : MonoBehaviour
             canRestart = true;
         });
         playerDead = false;
+        levelFinished = false;
         CancelInvoke();
     }
 
@@ -222,7 +225,7 @@ public class GameManager : MonoBehaviour
 
     public void PlayerDie()
     {
-        if (playerDead) return;
+        if (playerDead || levelFinished) return;
         deathsThisLevel += 1;
         totalDeaths += 1;
         playerDead = true;
@@ -326,6 +329,10 @@ public class GameManager : MonoBehaviour
         {
             Time.timeScale = timeScale;
         }
+    }
+
+    public void LevelFinished() {
+        levelFinished = true;
     }
 
     public void OpenNextLevel()

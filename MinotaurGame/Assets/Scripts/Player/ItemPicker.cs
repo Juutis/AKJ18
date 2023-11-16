@@ -56,6 +56,7 @@ public class ItemPicker : MonoBehaviour
                 BulletTime.Main.Trigger();
                 GameManager.main.StopTimer();
                 Invoke("TriggerNextLevel", 0.4f);
+                GameManager.main.LevelFinished();
             }
         }
     }
