@@ -44,10 +44,10 @@ public class LevelSelectorLevel : MonoBehaviour, IPointerEnterHandler, IPointerC
             BestTime = TimeSpan.FromMilliseconds(0)
         };
         label.text = (levelIndex + 1).ToString();
+        UpdateBestTime();
         if (levelIndex == GameManager.main.NextLevelIndex) {
             Select();
         }
-        UpdateBestTime();
         initialized = true;
     }
 
