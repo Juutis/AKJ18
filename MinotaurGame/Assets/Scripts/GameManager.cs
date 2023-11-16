@@ -253,6 +253,7 @@ public class GameManager : MonoBehaviour
         UIManager.main.CloseCurtains(delegate
         {
             UIGameOver.main.Show();
+            UIManager.main.OpenCurtains(delegate {});
         }
         );
     }
