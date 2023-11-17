@@ -114,7 +114,11 @@ public class UIManager : MonoBehaviour
         }
         hoveredLevel = level;
         levelName.text = level.LevelInfo.LevelName;
-        levelBestTime.text = level.LevelInfo.BestTime.ToString(@"mm\:ss\.ff");
+        var bestTime = level.LevelInfo.BestTime.ToString(@"mm\:ss\.ff");
+        if (level.LevelInfo.BestTime.Milliseconds == 0) {
+            bestTime = "-";
+        }
+        levelBestTime.text = bestTime;
     }
 
     public void SetTotalTime(TimeSpan time) {
